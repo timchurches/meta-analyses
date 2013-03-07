@@ -25,7 +25,7 @@
 
 # Results for the "new" studies usd in the Elvik meta-analysis were abstracted directly from the relevant papers,
 # with the exception of Hausotter 2000, which is a secondary reference to an (apparently) unpublished study by 
-# Hannover Medical School. Only an electronic copy of the Hausooter article could be obtained, and that did not include 
+# Hannover Medical School. Only an electronic copy of the Hausotter article could be obtained, and that did not include 
 # the numerical results of the Hannover study. Therefore for this study, the contingency table counts which appeared 
 # in a spreadsheet provided to me by Professor Elvik were used.
 
