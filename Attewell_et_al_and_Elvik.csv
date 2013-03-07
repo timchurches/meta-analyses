@@ -1,0 +1,42 @@
+injury.type,meta.analysis,study.label, year, cases.helmet, cases.no.helmet, controls.helmet,controls.no.helmet
+head,A,Dorsch et al 87,1987,62,61,60,14
+head,A,Wasserman et al 88,1988,0.344,7.656,8.344,6.656
+head,A,Thompson et al 89,1989,17,218,103,330
+head,A,Wasserman & Buccini 90,1990,1,9,108,73
+head,A,Spaite et al 91,1991,1,37,115,131
+head,A,McDermott et al 93,1993,90,468,276,876
+head,A,Maimaris et al 94,1994,4,100,110,828
+head,A,Thomas et al 94,1994,31,67,126,140
+head,A,Finvers et al 96,1996,4,72,92,531
+head,A,Thompson Rivara et al 96,1996,222,535,1496,1137
+head,A,Jacobson et al 98,1998,18,38,97,76
+head,A,Linn et al 98,1998,101,467,226,668
+head,A,Shafi et al 98,1998,21,107,10,70
+head,E,Heng et al 06,2006,1,57,16,86
+head,E,Hausotter 00,2000,12,1515,24,1681
+brain,A,Dorsch et al 87,1987,36,34,86,41
+brain,A,Wasserman et al 88,1988,0.244,3.756,8.244,10.756
+brain,A,Thompson et al 89,1989,4,95,103,330
+brain,A,Wasserman & Buccini 90,1990,32,34,77,48
+brain,A,Thomas et al 94,1994,8,31,126,140
+brain,A,Thompson Rivara et al 96,1996,62,141,1496,1137
+brain,A,Linn et al 98,1998,5,57,322,1078
+brain,A,Shafi et al 98,1998,21,96,10,81
+face,A,Dorsch et al 87,1987,1,7,121,68
+face,A,Thomson et al 90,1990,30,182,83,236
+face,A,Wasserman & Buccini 90,1990,2,3,107,79
+face,A,McDermott et al 93,1993,94,464,272,880
+face,A,Maimaris et al 94,1994,22,212,92,716
+face,A,Thompson Nunn et al 96,1996,73,133,1133,846
+face,A,Thompson Nunn et al 96,1996,52,89,1133,846
+face,A,Thompson Nunn et al 96,1996,297,264,1133,846
+face,C,Hansen et al 03,2003,110,172,180,529
+neck,A,Wasserman & Buccini 90,1990,14,6,95,76
+neck,A,McDermott et al 93,1993,21,44,345,1300
+neck,A,Rivara et al 97,1997,48,43,1666,1627
+fatal,A,Thompson et al 89,1989,0,3,120,545
+fatal,A,Spaite et al 91,1991,1,10,115,158
+fatal,A,McDermott et al 93,1993,2,12,364,1332
+fatal,A,Maimaris et al 94,1994,0.028,2.972,114.028,926.972
+fatal,A,Rivara et al 97,1997,1,13,1717,1659
+fatal,A,Shafi et al 98,1998,0.04,3.96,31.04,174.96
