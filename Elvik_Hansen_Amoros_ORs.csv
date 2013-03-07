@@ -1,0 +1,8 @@
+injury.type,meta.analysis,study.label,year,OR,LL95,UL95
+head,E,Hansen_a 03,2003,0.68,0.41,1.11
+head,E,Hansen_b 03,2003,0.43,0.28,0.66
+head,E,Amoros 09,2009,0.79,0.67,0.93
+face,E,Hansen_a 03,2003,1.98,1.26,3.2
+face,E,Hansen_b 03,2003,1.20,0.83,1.74
+face,E,Amoros 09,2009,0.80,0.67,0.95
+neck,E,Amoros 09,2009,1.24,0.98,1.58
