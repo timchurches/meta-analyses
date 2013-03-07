@@ -1,5 +1,5 @@
 # elvik-corrected-meta-analysis-reproduce.R
-# Created 30 Dec 2012, updated 7 March 2013. Copyright Tim Churches, Sax Institute, Sydney, Australia.
+# Created 30 Dec 2012, updated 7 March 2013. Copyright Tim Churches, Sydney, Australia.
 # Licensed under the terms of the 
 # Creative Commons Attribution-ShareAlike 3.0 Australia license 
 # (see http://http://creativecommons.org/licenses/by-sa/3.0/au/ ).
