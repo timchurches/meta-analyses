@@ -67,91 +67,53 @@ studies <- merge(studies,HA,all=T)
 studies$sei <- studies$vi^0.5
 
 # Display source data as a check
-studies
+# studies
 
 # Read the results for fixed-effects and random-effects summary estimates as they appear in table 4 of the published
 # 2012 corrigendum to the Elvik meta-analysis, for comparison with the results obtained from this reproduction of the 
 # Elvik meta-analysis.
-elvik.results <- read.csv(textConnection(getURL("https://raw.github.com/timchurches/meta-analyses/master/Elvik-meta-analysis-corrigendum-table4-results.csv")),header=T)
+results <- read.csv(textConnection(getURL("https://raw.github.com/timchurches/meta-analyses/master/Elvik-meta-analysis-corrigendum-table4-results.csv")),header=T)
 
-# Create subsets for each of the groups of studies in the Elvik meta-analysis
-studies.head.old <- studies[which(studies$injury.type=="head" & studies$meta.analysis == 'A'),]
-studies.head.new <- studies[which(studies$injury.type=="head" & studies$meta.analysis == 'E'),]
-studies.head.all <- studies[which(studies$injury.type=="head" & studies$meta.analysis %in% c('A','E')),]
-studies.brain.old <- studies[which(studies$injury.type=="brain" & studies$meta.analysis == 'A'),]
-studies.face.old <- studies[which(studies$injury.type=="face" & studies$meta.analysis == 'A'),]
-studies.face.new <- studies[which(studies$injury.type=="face" & studies$meta.analysis == 'E'),]
-studies.face.all <- studies[which(studies$injury.type=="face" & studies$meta.analysis %in% c('A','E')),]
-studies.neck.old <- studies[which(studies$injury.type=="neck" & studies$meta.analysis == 'A'),]
-studies.neck.new <- studies[which(studies$injury.type=="neck" & studies$meta.analysis == 'E'),]
-studies.neck.all <- studies[which(studies$injury.type=="neck" & studies$meta.analysis %in% c('A','E')),]
-studies.fatal.old <- studies[which(studies$injury.type=="fatal" & studies$meta.analysis == 'A'),]
-studies.hfn.old <- studies[which(studies$injury.type %in% c("head","face","neck") & studies$meta.analysis == 'A'),]
-studies.hfn.new <- studies[which(studies$injury.type %in% c("head","face","neck") & studies$meta.analysis == 'E'),]
-studies.hfn.all <- studies[which(studies$injury.type %in% c("head","face","neck") & studies$meta.analysis %in% c('A','E')),]
-
-# Now calculate and display summary estimates for each group of studies as per Elvik 2012 corrigendum table 4
+# Now calculate summary estimates for each group of studies as per Elvik 2012 corrigendum table 4
 # Note that metagen() uses DerSimonian-Laird pooling as default, and we specify rank method (as Elvik used) as the bias 
 # detection algorithm
 
-subset.meta <- function(dfsubset,injury.type,studies.included) {
+subset.meta <- function(studies, injury.type, studies.included) {
+  if (studies.included == "Attewell") { meta.analysis <- c("A")}
+  if (studies.included == "new") { meta.analysis <- c("E")}
+  if (studies.included == "all") { meta.analysis <- c("A","E")}
+  injury.type.string <- paste(injury.type,collapse="-")
+  dfsubset <- studies[which(studies$injury.type %in% injury.type & studies$meta.analysis %in% meta.analysis),] 
   ma <- metagen(TE=yi,seTE=sei,studlab=study.label,data=dfsubset,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-  subset.ma.results <- data.frame(source="reprod", injury.type=injury.type, studies.included=studies.included, num.studies=ma$k, FE.OR=exp(ma$TE.fixed), 
+  subset.ma.results <- data.frame(source="reprod", injury.type=injury.type.string, studies.included=studies.included, num.studies=ma$k, FE.OR=exp(ma$TE.fixed), 
                         FE.LL95=exp(ma$lower.fixed), FE.UL95=exp(ma$upper.fixed), RE.OR=exp(ma$TE.random), RE.LL95=exp(ma$lower.random), 
                         RE.UL95=exp(ma$upper.random))
-  elvik.results <- rbind(elvik.results,subset.ma.results)
-  summary(ma)
+  # print(summary(ma))
+  return(rbind(results,subset.ma.results))
 }
 
-subset.meta(head.old.meta,"head","Attewell")
+for(injtype in list(c("head"),c("face"),c("neck"),c("head","face","neck"))) {
+  for(studies.incl in list("Attewell","new","all")) {
+    results <- subset.meta(studies,injtype,studies.incl)
+  }
+}
 
-head.old.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.head.old,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-head.new.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.head.new,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-head.all.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.head.all,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-
-summary(head.old.meta)
-summary(head.new.meta)
-summary(head.all.meta)
-
-brain.old.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.brain.old,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-
-summary(brain.old.meta)
-
-face.old.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.face.old,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-face.new.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.face.new,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-face.all.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.face.all,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-
-summary(face.old.meta)
-summary(face.new.meta)
-summary(face.all.meta)
-
-neck.old.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.neck.old,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-neck.new.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.neck.new,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-neck.all.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.neck.all,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-
-summary(neck.old.meta)
-summary(neck.new.meta)
-summary(neck.all.meta)
-
-fatal.old.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.fatal.old,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-
-summary(fatal.old.meta)
-
-hfn.old.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.hfn.old,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-hfn.new.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.hfn.new,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-hfn.all.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.hfn.all,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
-
-summary(hfn.old.meta)
-summary(hfn.new.meta)
-summary(hfn.all.meta)
+# Sort and print the results
+results$injury.type <- ordered(results$injury.type,levels=c("head","face","neck","head-face-neck"))
+results$studies.included <- ordered(results$studies.included,levels=c("Attewell","new","all"))
+results <- results[order(results$injury.type,results$studies.included,results$source),]
+print(results,digits=2)
 
 # Finally calculate trimmed-and-filled results for head, face and neck just as an illustration of 
 # the magnitude of the calculation errors in the Elvik corrigendum.
 # Note that from a statistical point-of-view, application of the Duval-and-Tweedie trim-and-fill method
 # to pooled results for different outcomes, when each of those outcomes has its own quite different mean
 # effect (helmets are very protective for heads, somewhat protective for faces, not protective for necks)
-# is just plain wrong. The Duval-and-Tweedie method is based on the assumption that all published studies
+# is not really a valid approach. The Duval-and-Tweedie method is based on the assumption that all published studies
 # come from just one underlying distribution of estimates, not multiple distributions each with its own mean and variance!
 
+studies.hfn.all <- studies[which(studies$injury.type %in% c("head","face","neck") & studies$meta.analysis %in% c('A','E')),]
+hfn.all.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.hfn.all,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
 hfn.all.tf <- trimfill(hfn.all.meta)
 summary(hfn.all.tf)
+
