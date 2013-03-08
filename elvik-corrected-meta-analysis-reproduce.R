@@ -43,14 +43,12 @@ require(RCurl)
 # have been added to the counts in several of these studies. These continuity corrections
 # were extracted from a spreadsheet which ws supplied by Professor Elvik and which contained the
 # data used in the Elvik meta-analysis.
-Attewell.and.Elvik.data <- getURL("https://raw.github.com/timchurches/meta-analyses/master/Attewell_et_al_and_Elvik.csv")
-studies <- read.csv(textConnection(Attewell.and.Elvik.data),header=T)
+studies <- read.csv(textConnection(getURL("https://raw.github.com/timchurches/meta-analyses/master/Attewell_et_al_and_Elvik.csv")),header=T)
 
 # Contingency table counts are not available (from the published papers) for two of the "new"
 # studies used in the Elvik meta-analysis. Therefore we read in the summary results (OR estimate
 # and published 95% confidence intervals) for these studies and estimate variance from those.
-Hansen.and.Amoros.data <- getURL("https://raw.github.com/timchurches/meta-analyses/master/Elvik_Hansen_Amoros_ORs.csv")
-HA <- read.csv(textConnection(Hansen.and.Amoros.data),header=T)
+HA <- read.csv(textConnection(getURL("https://raw.github.com/timchurches/meta-analyses/master/Elvik_Hansen_Amoros_ORs.csv")),header=T)
 HA$vi <- (((log(HA$UL95)-log(HA$LL95))/3.92))^2
 HA$yi <- log(HA$OR)
 
@@ -71,6 +69,11 @@ studies$sei <- studies$vi^0.5
 # Display source data as a check
 studies
 
+# Read the results for fixed-effects and random-effects summary estimates as they appear in table 4 of the published
+# 2012 corrigendum to the Elvik meta-analysis, for comparison with the results obtained from this reproduction of the 
+# Elvik meta-analysis.
+elvik.results <- read.csv(textConnection(getURL("https://raw.github.com/timchurches/meta-analyses/master/Elvik-meta-analysis-corrigendum-table4-results.csv")),header=T)
+
 # Create subsets for each of the groups of studies in the Elvik meta-analysis
 studies.head.old <- studies[which(studies$injury.type=="head" & studies$meta.analysis == 'A'),]
 studies.head.new <- studies[which(studies$injury.type=="head" & studies$meta.analysis == 'E'),]
@@ -87,9 +90,20 @@ studies.hfn.old <- studies[which(studies$injury.type %in% c("head","face","neck"
 studies.hfn.new <- studies[which(studies$injury.type %in% c("head","face","neck") & studies$meta.analysis == 'E'),]
 studies.hfn.all <- studies[which(studies$injury.type %in% c("head","face","neck") & studies$meta.analysis %in% c('A','E')),]
 
-# Now calculate and display summary estimates for each group of studies as per Elvik corrigendum table 4
+# Now calculate and display summary estimates for each group of studies as per Elvik 2012 corrigendum table 4
 # Note that metagen() uses DerSimonian-Laird pooling as default, and we specify rank method (as Elvik used) as the bias 
 # detection algorithm
+
+subset.meta <- function(dfsubset,injury.type,studies.included) {
+  ma <- metagen(TE=yi,seTE=sei,studlab=study.label,data=dfsubset,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
+  subset.ma.results <- data.frame(source="reprod", injury.type=injury.type, studies.included=studies.included, num.studies=ma$k, FE.OR=exp(ma$TE.fixed), 
+                        FE.LL95=exp(ma$lower.fixed), FE.UL95=exp(ma$upper.fixed), RE.OR=exp(ma$TE.random), RE.LL95=exp(ma$lower.random), 
+                        RE.UL95=exp(ma$upper.random))
+  elvik.results <- rbind(elvik.results,subset.ma.results)
+  summary(ma)
+}
+
+subset.meta(head.old.meta,"head","Attewell")
 
 head.old.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.head.old,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
 head.new.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.head.new,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
