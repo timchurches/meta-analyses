@@ -163,7 +163,7 @@ print(xtable(results[, c(1, 2, 3, 4, 5, 11, 8, 12)], digits = 2), type = "html",
 ```
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
-<!-- Sun Mar 10 18:57:55 2013 -->
+<!-- Sun Mar 10 19:29:01 2013 -->
 <TABLE border=1>
 <TR> <TH> Source </TH> <TH> Injury Type </TH> <TH> Studies </TH> <TH> Number </TH> <TH> Fixed-effects OR </TH> <TH> (FE 95% CI) </TH> <TH> Random-effects OR </TH> <TH> (RE 95% CI) </TH>  </TR>
   <TR> <TD> Elvik </TD> <TD> head </TD> <TD> Attewell </TD> <TD align="right">  13 </TD> <TD align="right"> 0.42 </TD> <TD> ( 0.37 - 0.47 ) </TD> <TD align="right"> 0.38 </TD> <TD> ( 0.28 - 0.53 ) </TD> </TR>
@@ -295,6 +295,11 @@ References
 
 ----
 
+### Conflicts of interest
+None. I am the co-author of two papers on the effects of mandatory bicycle helmet laws in Australia, both published in _Accident Analysis & Prevention_ ([Walter _et al_. 2011], [Walter _et al_. 2013]) and am currently working on an updated meta-analysis of bicycle helmet effectiveness, based on the work described in this article, as an unfunded project in my spare time. I have no relationship with and receive no funding or remuneration from any helmet manufacturer, wholesaler or retailer, nor any government departments or committees with responsibilty for cycling or road safety policy.
+
+----
+
 [Attewell 2000]: http://www.infrastructure.gov.au/roads/safety/publications/2000/pdf/Bic_Crash_5.pdf "Attewell, RG, Glase, K, McFadden, M (2000). Bicycle Helmets and Injury Prevention: A formal review. Canberra, Australia: Australian Transport Safety Bureau. ISBN 0 642 25514 8" 
 
 [Attewell 2001]: http://www.sciencedirect.com/science/article/pii/S0001457500000488 "Attewell, RG; Glase K, McFadden M (May 2001). Bicycle helmet efficacy: a meta-analysis. Accident Analysis & Prevention 33(3): 45–352. doi:10.1016/S0001-4575(00)00048-8. PMID: 11235796"
@@ -313,3 +318,6 @@ References
 
 [Høye & Elvik 2010]: http://dx.doi.org/10.3141/2147-01 "Høye A, Elvik R (2010). Publication Bias in Road Safety Evaluation: How Can It Be Detected and How Common Is It? Transportation Research Record: Journal of the Transportation Research Board Volume 2147 pp 1-8."
 
+[Walter _et al_. 2011]: http://handle.unsw.edu.au/1959.4/50858 "Walter SR, Olivier J, Churches T, Grzebieta R. (November 2011). "The impact of compulsory cycle helmet legislation on cyclist head injuries in New South Wales, Australia.". Accident Analysis & Prevention 43 (6): 2064–2071. doi:10.1016/j.aap.2011.05.029. PMID: 21819836"
+
+[Walter _et al_. 2013]: http://handle.unsw.edu.au/1959.4/52350 "Walter SR, Olivier J, Churches T, Grzebieta R. (March 2013). "The impact of compulsory helmet legislation on cyclist head injuries in New South Wales, Australia: A response". Accident Analysis & Prevention 52: 204–209. doi:10.1016/j.aap.2012.11.028. PMID: 23339779"
