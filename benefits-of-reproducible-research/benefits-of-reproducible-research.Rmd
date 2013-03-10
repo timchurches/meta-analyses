@@ -1,0 +1,201 @@
+The benefits of reproducible research: a public health example
+==============================================================
+**Tim Churches**  
+Sydney, Australia  
+9 March 2013.
+
+About this document
+-------------------
+This document is an example of [literate programming](http://en.wikipedia.org/wiki/Literate_programming), in which computer program code is interleaved with expository text and the output of the computer code. The document was created as a markdown document using RStudio and the [_knitr_](http://yihui.name/knitr/) package for the [R statistical environment](http://www.r-project.org). The source file for this document, together with the data files it uses, are freely available from GitHub under the terms of the [Creative Commons Attribution-ShareAlike 3.0 Australia license](http://http://creativecommons.org/licenses/by-sa/3.0/au/), with the exception of the link to the figure from the journal _Accident Analysis and Prevention_, which is copyright Elsevier Pty Ltd. 
+
+Pre-amble
+---------
+Recognition of the benefits and desirability of reproducible research has been growing in many scientific disciplines over the last decade, including [epidemiologic research](http://aje.oxfordjournals.org/content/163/9/783.full) and [biostatistics](http://biostatistics.oxfordjournals.org/content/10/3/405.full), both of which are foundation stones of public health. The aim of this article is to provide an illustration of the potential benefits of replication of reproducible public health research, and to itself serve as an illustration of methods for publishing research materials in a manner that makes replication, and possibly extension, of that research as efficient as possible.
+
+The example concerns a 2011 meta-analysis of bicycle helmet effectiveness by Rune Elvik ([Elvik 2011a]), published in the well-regarded journal _Accident Analysis and Prevention_, of which Professor Elvik is also one of two editors-in-chief. As the title suggests, this meta-analysis was itself a re-analysis and extension of a 2001 meta-analysis by Attewell _et al_. ([Attewell 2001]). The Elvik meta-analysis has attracted considerable attention because it suggested that bicycle helmets may not be as effective in preventing injuries in the event of an accident as had been previously thought. As at March 2013, it has been referenced by 15 other papers [according to Scopus](http://www.scopus.com/results/citedbyresults.url?sort=plf-f&cite=2-s2.0-79952449461&src=s&imp=t&sid=12CBF6348C488B4C46AC2785C1C17A17.iqs8TDG0Wy6BURhzD3nFA%3a30&sot=cite&sdt=a&sl=0&origin=inward&txGid=12CBF6348C488B4C46AC2785C1C17A17.iqs8TDG0Wy6BURhzD3nFA%3a2). The paper has also been cited extensively in (often acrimonious) public discourse over bicycle helmets and whether the wearing of them should be promoted and/or mandated. It is quite possible that the Elvik meta-analysis has influenced public policy formation in jurisdictions that are currently considering bicycle helmet initiatives. Thus, the Elvik meta-analysis is a paper with a real-world impact (pun intended).
+
+Problems with publication bias adjustment
+-----------------------------------------
+Although I had glanced through the Elvik paper when it appeared in early 2011, it wasn't until Septemeber 2012 that I had occasion to read it in detail. Elvik had employed the trim-and-fill method as developed by Duval and Tweedie ([Duval & Tweedie 2000]) to adjust for potential publication bias. For a strict empiricist, the trim-and-fill method is a bit alarming, because it involves the "invention" of hypothetical unpublished studies. In a nutshell, the method involves the use of a signed rank test to estimate the number of outlier study results which need to be trimmed from the funnel plot in order to make it as close to symmetrical as possible, followed by recalculation of the summary effect measure (odds ratio in this case) after the outliers have been temporarily set aside (trimmed). This trimming and recalculation  procedure is repeated until a stable summary OR is obtained. The trimmed outlier study results are then restored to the funnel plot, and a set of imputed “unpublished” studies are added to the funnel plot as  mirror images of the previously trimmed outlier studies, in order to achieve symmetry. The key point is that  the vertical axis of symmetry around which the imputed studies should be added is the re-estimated summary effect measure after trimming. which are mirror images of published studies. These hypothesised studies, which are supposed to have never seen the light of day, are added into the pool of extant studies in order to acheive symmetry of the funnel plot of study results. I am not going to discuss here the range of views on this and other methods for correcting hypothetical publication bias, nor the advisability of applying this adjustment technique to these particular bicycle helmet effectiveness studies. It suffices to say that if the trim-and-fill technique is to be applied at all, then it should be applied correctly.
+
+I noticed that figures 1 and 4 in the Elvik 2011 paper didn't look right: the hypothetical mirror-image "fill" studies had been added around a vertical axis of symmetry located at log(OR)=0 (ie OR=1), instead of around an axis of symmetry located at the weighted mean of the pooled results (after outliers have been trimmed), which in the case of bicycle helmets and head injuries, is considerable less than OR=1. The result of such an error is an over-adjustment the summary odds-ratio, making bicycle helmets appear less effective than they really are. 
+
+Given these apparent errors in the figures, I thought it best to attempt to replicate the entire Elvik meta-analysis. The raw count data used in the 2000 Attewell _et al_. meta-analysis were conveniently available in an appendix to a monograph on the study ([Attewell 2000]), and these data were entered into a data file. Elvik had added the results of four more studies. Results were easily abstracted from the published paper for one of these four studies. Unfortunately the published versions of two of the studies did not include count data, as required for most meta-analyses, and instead only provided adjusted ORs with confidence limits. The fourth paper apparently included count data but these were missing from the only copy I was able to obtain electronically. 
+
+Due to these difficulties, I wrote to Professor Elvik in late September 2012 requesting a copy of the data that he had used from these four studies. To his immense credit, Professor Elvik responded promptly, sending me a spreadsheet which contained all the data as well as all the calculations for his meta-analysis. I was a bit surprised to learn that he was using a spreadsheet to undertake meta-analysis, given that very capable and well-tested meta-analysis packages are available for Stata, R, SAS and other statistical software. The first thing I noticed in the spreadsheet were differences in the count data for three of the studies from the Attewell _et al_. meta-analysis. I went back to the original papers for those studies and found that the Attewell _et al_. data were correct but had apparently been transcribed incorrectly into the spreadsheet. These errors were relatively minor and did not materially affect the results, but nonetheless the data Elvik had used in his calculation were slightly wrong. However, I was able to obtain from the spreadsheet the counts for one of the new studies, and to determine that Elvik had estimated the variance of the adjusted odss ratios of the other three studies using the 95% confidence limits. This is not an unreasonable approach in the absence of the raw count data, although the raw counts might still have been available by contacting the authors of those studies. The spreadsheet also provided the precise continuity adjustments which Elvik had used for a few studies which included zero counts (Attewell _et al_. had excluded these studies).
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+# We need a function from the metafor package to conveniently convert from contingency table counts to ORs and SEs.
+require(metafor) || install.packages(metafor)
+# But the actual meta-analysis we'll do with the meta package.
+require(meta) || install.packages(meta)
+# xtable to print the results nicely
+require(xtable) || install.packages(xtable)
+
+# Read in data from the Attewell et al. 2001 meta-analysis, the counts taken from the appendix
+# in the Attewell report, with the addition of counts from two of the four "new" studies
+# included in the Elvik meta-analysis. Note that continuity corrections as used by Elvik
+# have been added to the counts in several of these studies. These continuity corrections
+# were extracted from a spreadsheet which ws supplied by Professor Elvik and which contained the
+# data used in the Elvik meta-analysis.
+studies <- read.csv("Attewell_et_al_and_Elvik.csv",header=T)
+
+# Contingency table counts are not available (from the published papers) for two of the "new"
+# studies used in the Elvik meta-analysis. Therefore we read in the summary results (OR estimate
+# and published 95% confidence intervals) for these studies and estimate variance from those.
+HA <- read.csv("Elvik_Hansen_Amoros_ORs.csv",header=T)
+HA$vi <- (((log(HA$UL95)-log(HA$LL95))/3.92))^2
+HA$yi <- log(HA$OR)
+
+# Calculate contingency table marginal totals
+studies$obs.helmet <- studies$cases.helmet + studies$controls.helmet
+studies$obs.no.helmet <- studies$cases.no.helmet + studies$controls.no.helmet
+
+# Calculate ORs and variance using the escalc() function from the metafor package, and add these columns to main studies
+# table
+studies <- cbind(studies,escalc(measure='OR',ai=cases.helmet,bi=cases.no.helmet,ci=controls.helmet,di=controls.no.helmet,data=studies))
+
+# Add the rows for the Hansen and Amoros new studies to the main data table
+studies <- merge(studies,HA,all=T)
+
+# Calculate SE
+studies$sei <- studies$vi^0.5
+```
+
+It was then very straightforward to replicate the meta-analysis, including the trim-and-fill publication bias adjustment, using the _meta_ package for R. The R code which loads the data into a data frame named _studies_ is in the source code of this document, but won't be shown here. First we'll repeat the meta-analysis for the head injury outcome studies from Attewell _et al_ and examine the results.
+
+```{r}
+head.attewell <- studies[which(studies$injury.type == "head" & studies$meta.analysis == "A"),] 
+head.attewell.meta  <- metagen(TE=yi, seTE=sei, studlab=study.label, data=head.attewell, method.bias="rank", label.e="Injured", label.c="Not injured", sm="OR")
+summary(head.attewell.meta)
+```
+OK, those results exactly match those given in Table 1 of the Elvik 2011 paper. Now we'll do the trim-and-fill adjustment.
+```{r}
+head.attewell.tf <- trimfill(head.attewell.meta)
+summary(head.attewell.tf)
+```
+Unfortunately those results are different from the corresponding results given in Table 1 of the Elvik paper. Finally, let's examine a funnel plot (the "filled" hypothetical studies are shown as empty circles).
+```{r fig.width=7, fig.height=6}
+funnel(head.attewell.tf,log="x",main="Funnel plot of estimates of effect of bicycle helmets\non head injury - three data points added")
+```
+Compare that with Figure 1 from the Elvik 2011 paper:
+
+![Fig 1 from Elvik 2011](http://ars.els-cdn.com/content/image/1-s2.0-S000145751100008X-gr1.jpg)
+
+The overall pattern of points for the published studies are identical in both of the figures above (well, almost identical, due to the minor data errors underlying the Elvik figure), but the hypothetical "fill" study results are clearly in the wrong places in the Elvik figure.
+
+After repeating this replication of the trim-and-fill procedure for each of the different types of injury outcome, it became clear that these errors were not confined to just these figures, but also affected all the publication bias adjustment results throughout the paper. Elvik based the conclusions of his study on these publication bias-adjusted results, and thus the correctness of the entire paper was in serious doubt.
+
+In early October 2012, I wrote to Professor Elvik in his capacity as author of the paper, and to Dr Karl Kim, in his capacity as co-editor of _Accident Analysis and Prevention_, alerting them to these problems (incorrect data and incorrect bias adjustment calculations), providing an earlier version of the data files and R code used in this document as supporting evidence. I suggested that the entire paper ought to be retracted, in accordance with [COPE guidelines](http://publicationethics.org/files/retraction%20guidelines.pdf).
+
+The outcome was that, in late December 2012, _Accident Analysis and Prevention_ published a whole-of-paper corrigendum for the 2011 Elvik meta-analysis ([Elvik 2012c]). This corrigendum was itself unusual, because it included not just corrected calculations, but also a substantial amount of new material which did not appear in the original paper.
+
+Other meta-analysis papers by Elvik
+-----------------------------------
+It appears that three other published papers of which Elvik was the sole author or a co-author are also affected by trim-and-fill publication bias errors ([Høye & Elvik 2010], [Elvik 2011b], [Elvik 2012a]).The authors of the papers and editors of the journals were all alerted to these errors shortly after they were discovered in October 2012. At the time of writing, one of these papers has already been withdrawn by the journal in which it was published ([Elvik 2012a]). There is one other paper by Elvik which relies on incorrect results from the 2011 bicycle helmet meta-analysis which will also need to be corrected ([Elvik 2012b]).
+
+But the story doesn't end there.
+
+Problems with the corrigendum
+-----------------------------
+Given the problems with the 2011 meta-analysis, I thought it wise to try to replicate all the results in the corrigendum. This was easily done using the raw study data I had previously assembled. First I abstracted the fixed-effects and random-effects summary results from Table 4 of the corrigendum into a data file, to permit convenient comparisons with the results of my replication. This was loaded as a data frame named _results_. The following code was used to attempt to repliacte the table 4 results:
+```{r echo=FALSE, message=FALSE, results='hide'}
+# Read the results for fixed-effects and random-effects summary estimates as they appear in table 4 of the published
+# 2012 corrigendum to the Elvik meta-analysis, for comparison with the results obtained from this reproduction of the 
+# Elvik meta-analysis.
+results <- read.csv("Elvik-meta-analysis-corrigendum-table4-results.csv",header=T)
+```
+```{r}
+# Calculate summary estimates for each group of studies as per Elvik 2012 corrigendum table 4
+# Note that metagen() uses DerSimonian-Laird pooling as default, and we specify the rank method as 
+# used by Elvik as the bias detection algorithm
+
+subset.meta <- function(studies, injury.type, studies.included) {
+  if (studies.included == "Attewell") { meta.analysis <- c("A")}
+  if (studies.included == "new") { meta.analysis <- c("E")}
+  if (studies.included == "all") { meta.analysis <- c("A","E")}
+  injury.type.string <- paste(injury.type,collapse="-")
+  dfsubset <- studies[which(studies$injury.type %in% injury.type & studies$meta.analysis %in% meta.analysis),] 
+  ma <- metagen(TE=yi,seTE=sei,studlab=study.label,data=dfsubset,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
+  subset.ma.results <- data.frame(source="replica", injury.type=injury.type.string, studies.included=studies.included, num.studies=ma$k, FE.OR=exp(ma$TE.fixed), 
+                        FE.LL95=exp(ma$lower.fixed), FE.UL95=exp(ma$upper.fixed), RE.OR=exp(ma$TE.random), RE.LL95=exp(ma$lower.random), 
+                        RE.UL95=exp(ma$upper.random))
+  # print(summary(ma))
+  return(rbind(results,subset.ma.results))
+}
+
+for(injtype in list(c("head"),c("face"),c("neck"),c("head","face","neck"))) {
+  for(studies.incl in list("Attewell","new","all")) {
+    results <- subset.meta(studies,injtype,studies.incl)
+  }
+}
+```
+After sorting the results, we can examine them for discrepencies.
+```{r echo=FALSE, message=FALSE, results='hide'}
+results$injury.type <- ordered(results$injury.type,levels=c("head","face","neck","head-face-neck"))
+results$studies.included <- ordered(results$studies.included,levels=c("Attewell","new","all"))
+results <- results[order(results$injury.type,results$studies.included,results$source),]
+results$FE.CI <- with(results,paste("(",formatC(FE.LL95,digits=2),"-",formatC(FE.UL95,digits=2),")"))
+results$RE.CI <- with(results,paste("(",formatC(RE.LL95,digits=2),"-",formatC(RE.UL95,digits=2),")"))
+colnames(results) <- c("Source","Injury Type","Studies","n","Fixed-effects OR","FE OR 95% LL","FE OR 95% UL","Random-effects OR","RE OR 95% LL","RE OR 95% UL","FE OR 9% CI","RE OR 95% CI")
+```
+```{r table, results='asis'} 
+print(xtable(results[,c(1,2,3,4,5,11,8,12)],digits=2),type="html",include.rownames=T)
+``` 
+
+As can be seen from the output above, the replication agrees precisely with the fixed-effects summary OR estimates (and confidence intervals) which are given in the Elvik corrigendum. This agreement proves that the underlying data used in this replication is the same as that used by Elvik for the corrigendum.
+
+However, several of the random-effects summary OR estimates are different, some of the them quite different. This appears to be the case wherever both the Attewell and the new studies are combined (the "all" rows), and for all the combined head, nface and neck results. This points to an error in the way Elvik has done the random-effects calculations in his spreadsheet. Close scrutiny of the spreadsheet supplied by Professor Elvik reveals several possible sources of these calculation errors, although I cannot be sure because spreadsheets are difficult to debug and reverse-engineer at the best of times, and doubly so when constructed by someone else. Nonetheless, the Elvik results as they appear in the corrigendum definitely appear to be incorrect.
+
+Could the R _meta_ package be wrong? This is unlikely because it has been available for many years and has been widely used. Nevertheless, as an additional check, I replicated the meta-analysis in Stata 12.1 using the _metan_ add-in. This produced exactly the same results as the _meta_ package in R.
+
+Elvik bases the conclusions to his paper (both original and corrected versions) on the publication bias adjusted random-effects summary estimates for both old and new studies combined, and for head, face and neck outcomes combines. Unfortunately, these are the very results which are affected by the calculation errors which are apparent in the corrigendum.
+
+How bad are the errors? Elvik states in his conclusion: 
+> When the analysis is updated by adding four new studies, the protective effects attributed to to bicycle helmets are further reduced. According to the new studies, no overall effect of bicycle helmets could be found when injuries to head, face or neck are considered as a whole.
+Presumably this conclusion was drawn on the basis of the publication-bias-adjusted fixed-effcts and random-effects summary ORs for head, face and neck outcomes combined, as given by Elvik in Table 4 of the corrigendum. For the "new" studies, these are: fixed-effects adjusted summary OR=0.89 (95% CI 0.82 - 0.98) and random-effects bias-adjusted summary OR=1.03 (95% CI 0.86 - 1.24).
+
+Let's try to replicate those results:
+```{r}
+studies.hfn.new <- studies[which(studies$injury.type %in% c("head","face","neck") & studies$meta.analysis == "E"),]
+hfn.new.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.hfn.new,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
+hfn.new.tf <- trimfill(hfn.new.meta)
+summary(hfn.new.tf)
+```
+The _trimfill()_ function in _meta_ only adds one hypothetical fill study, whereas Elvik adds two, but neither of the adjusted summary ORs are anywhere new those reported by Elvik. Similarly, the "headline" result of the Elvik meta-analysis has been the publictaion bias-adjusted random-effects summary OR for all studies, both old and new, for head, face abd neck injuries combined. In the corrigendum, Elvik calculates this as 0.82 (95% CI 0.72 - 0.93). Here is what we get:
+```{r echo=FALSE}
+studies.hfn.all <- studies[which(studies$injury.type %in% c("head","face","neck") & studies$meta.analysis %in% c("A","E")),]
+hfn.all.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.hfn.all,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
+hfn.all.tf <- trimfill(hfn.all.meta)
+summary(hfn.all.tf)
+```
+
+I wrote to Professor Elvik and his co-editor Dr Karl Kim on 30th December 2012 to alert them to these apparent calculation errors in the corrigendum, once again providing data files and both R and Stata code in support of my findings. It now seems clear that both the original Elvik meta-analysis and the corrigendum ought to be retracted in their entirety, given the pervasive nature of these calculation errors. A whole-of-paper corrigendum for a whole-of-paper corrigendum is not tenable: Elvik should be required to go back to square one and re-submit a completely new paper for a completely fresh, and it is hoped, more thorough peer-review. To date, I have been notified by an Elsevier representative that the matter is under investigation. Note that there is no hint whatsoever of falsification or any deliberate wrong-doing - these are all just unfortunate errors, albeit ones which might have been avoided or detected earlier had things been done differently.
+
+Conclusions and Recommendations
+-------------------------------
+Firstly, Professor Elvik must be congratulated for freely sharing the spreadsheet which contained both the data and the calculations that he used. Although it would have been possible to replicate the meta-analysis without this, quite a lot more time and expense would have been involved. Of course, there is no reason why the raw data used in any meta-analysis cannot routinely be made available as a supplement to each and every published meta-analysis - ideally in machine-readable format to avoid transcription errors. There are no confidentiality concerns in meta-analyses, because the data is harvested from already-published papers.
+
+Secondly, it is rarely advisable to undertake complex epidemiological and statistical calculations using a spreadsheet, especially when well-tested softare packages to do the same thing are raedily available. Spreadsheets are just too hard to debug and audit.
+
+Finally, there is a strong case to be made for authors making their programme code (including spreadsheets) available to both peer-reviewers and readers, even if the data can't be released for confidentiality or other reasons.
+
+
+[Attewell 2000]: http://www.infrastructure.gov.au/roads/safety/publications/2000/pdf/Bic_Crash_5.pdf "Attewell, RG, Glase, K, McFadden, M (2000). Bicycle Helmets and Injury Prevention: A formal review. Canberra, Australia: Australian Transport Safety Bureau. ISBN 0 642 25514 8"" 
+
+[Attewell 2001]: http://www.sciencedirect.com/science/article/pii/S0001457500000488 "Attewell, RG; Glase K, McFadden M (May 2001). Bicycle helmet efficacy: a meta-analysis. Accident Analysis & Prevention 33(3): 45–352. doi:10.1016/S0001-4575(00)00048-8. PMID: 11235796""
+
+[Duval & Tweedie 2000]: http://www.ncbi.nlm.nih.gov/pubmed/10877304 "Duval S, Tweedie R. (2000) Trim and fill: A simple funnel-plot-based method of testing and adjusting for publication bias in meta-analysis. Biometrics. 2000 Jun;56(2):455-63. PMID: 10877304" 
+
+[Elvik 2011a]: http://dx.doi.org/10.1016/j.aap.2011.01.007 "Elvik R (2011). Publication bias and time-trend bias in meta-analysis of bicycle helmet efficacy: A re-analysis of Attewell, Glase and McFadden, 2001, Accident Analysis & Prevention, Volume 43, Issue 3, May 2011, Pages 1245-1251. PMID: 21376924"
+
+[Elvik 2011b]: http://dx.doi.org/10.3141/2236-03 "Elvik R. (2011) Effects of Mobile Phone Use on Accident Risk: Problems of Meta-Analysis When Studies Are Few and Bad. Transportation Research Record: Journal of the Transportation Research Board Issue 2236 pp 20-26."
+
+[Elvik 2012a]: http://dx.doi.org/10.1016/j.aap.2012.06.017 "Elvik R. Risk of road accident associated with the use of drugs: A systematic review and meta-analysis of evidence from epidemiological studies. Accident Analysis & Prevention, Withdrawn Article in Press, Available online 9 July 2012. PMID: 22785089"
+
+[Elvik 2012b]: http://dx.doi.org/10.1016/j.aap.2011.07.016 "Elvik R. (2012). The range of replications technique for assessing the external validity of road safety evaluation studies. Accident Analysis & Prevention Volume 45, March 2012, Pages 272–280. PMID: 22269510"
+
+[Elvik 2012c]: http://dx.doi.org/10.1016/j.aap.2012.12.003 "Elvik R (2012). Corrigendum to: 'Publication bias and time-trend bias in meta-analysis of bicycle helmet efficacy: A re-analysis of Attewell, Glase and McFadden, 2001' [Accid. Anal. Prev. 43 (2011) 1245–1251]. Accident Analysis & Prevention, In Press, Corrected Proof, Available online 23 December 2012."
+
+[Høye & Elvik 2010]: http://dx.doi.org/10.3141/2147-01 "Høye A, Elvik R (2010). Publication Bias in Road Safety Evaluation: How Can It Be Detected and How Common Is It? Transportation Research Record: Journal of the Transportation Research Board Volume 2147 pp 1-8."
+

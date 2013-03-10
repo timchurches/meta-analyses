@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>The benefits of reproducible research: a public health example</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>The benefits of reproducible research: a public health example</h1>
+
+<p><strong>Tim Churches</strong><br/>
+Sydney, Australia<br/>
+9 March 2013.</p>
+
+<h2>About this document</h2>
+
+<p>This document is an example of <a href="http://en.wikipedia.org/wiki/Literate_programming">literate programming</a>, in which computer program code is interleaved with expository text and the output of the computer code. The document was created as a markdown document using RStudio and the <a href="http://yihui.name/knitr/"><em>knitr</em></a> package for the <a href="http://www.r-project.org">R statistical environment</a>. The source file for this document, together with the data files it uses, are freely available from GitHub under the terms of the <a href="http://http://creativecommons.org/licenses/by-sa/3.0/au/">Creative Commons Attribution-ShareAlike 3.0 Australia license</a>, with the exception of the link to the figure from the journal <em>Accident Analysis and Prevention</em>, which is copyright Elsevier Pty Ltd. </p>
+
+<h2>Pre-amble</h2>
+
+<p>Recognition of the benefits and desirability of reproducible research has been growing in many scientific disciplines over the last decade, including <a href="http://aje.oxfordjournals.org/content/163/9/783.full">epidemiologic research</a> and <a href="http://biostatistics.oxfordjournals.org/content/10/3/405.full">biostatistics</a>, both of which are foundation stones of public health. The aim of this article is to provide an illustration of the potential benefits of replication of reproducible public health research, and to itself serve as an illustration of methods for publishing research materials in a manner that makes replication, and possibly extension, of that research as efficient as possible.</p>
+
+<p>The example concerns a 2011 meta-analysis of bicycle helmet effectiveness by Rune Elvik (<a href="http://dx.doi.org/10.1016/j.aap.2011.01.007" title="Elvik R (2011). Publication bias and time-trend bias in meta-analysis of bicycle helmet efficacy: A re-analysis of Attewell, Glase and McFadden, 2001, Accident Analysis &amp; Prevention, Volume 43, Issue 3, May 2011, Pages 1245-1251. PMID: 21376924">Elvik 2011a</a>), published in the well-regarded journal <em>Accident Analysis and Prevention</em>, of which Professor Elvik is also one of two editors-in-chief. As the title suggests, this meta-analysis was itself a re-analysis and extension of a 2001 meta-analysis by Attewell <em>et al</em>. (<a href="http://www.sciencedirect.com/science/article/pii/S0001457500000488" title="Attewell, RG; Glase K, McFadden M (May 2001). Bicycle helmet efficacy: a meta-analysis. Accident Analysis &amp; Prevention 33(3): 45–352. doi:10.1016/S0001-4575(00)00048-8. PMID: 11235796&quot;">Attewell 2001</a>). The Elvik meta-analysis has attracted considerable attention because it suggested that bicycle helmets may not be as effective in preventing injuries in the event of an accident as had been previously thought. As at March 2013, it has been referenced by 15 other papers <a href="http://www.scopus.com/results/citedbyresults.url?sort=plf-f&amp;cite=2-s2.0-79952449461&amp;src=s&amp;imp=t&amp;sid=12CBF6348C488B4C46AC2785C1C17A17.iqs8TDG0Wy6BURhzD3nFA%3a30&amp;sot=cite&amp;sdt=a&amp;sl=0&amp;origin=inward&amp;txGid=12CBF6348C488B4C46AC2785C1C17A17.iqs8TDG0Wy6BURhzD3nFA%3a2">according to Scopus</a>. The paper has also been cited extensively in (often acrimonious) public discourse over bicycle helmets and whether the wearing of them should be promoted and/or mandated. It is quite possible that the Elvik meta-analysis has influenced public policy formation in jurisdictions that are currently considering bicycle helmet initiatives. Thus, the Elvik meta-analysis is a paper with a real-world impact (pun intended).</p>
+
+<h2>Problems with publication bias adjustment</h2>
+
+<p>Although I had glanced through the Elvik paper when it appeared in early 2011, it wasn&#39;t until Septemeber 2012 that I had occasion to read it in detail. Elvik had employed the trim-and-fill method as developed by Duval and Tweedie (<a href="http://www.ncbi.nlm.nih.gov/pubmed/10877304" title="Duval S, Tweedie R. (2000) Trim and fill: A simple funnel-plot-based method of testing and adjusting for publication bias in meta-analysis. Biometrics. 2000 Jun;56(2):455-63. PMID: 10877304">Duval &amp; Tweedie 2000</a>) to adjust for potential publication bias. For a strict empiricist, the trim-and-fill method is a bit alarming, because it involves the &ldquo;invention&rdquo; of hypothetical unpublished studies. In a nutshell, the method involves the use of a signed rank test to estimate the number of outlier study results which need to be trimmed from the funnel plot in order to make it as close to symmetrical as possible, followed by recalculation of the summary effect measure (odds ratio in this case) after the outliers have been temporarily set aside (trimmed). This trimming and recalculation  procedure is repeated until a stable summary OR is obtained. The trimmed outlier study results are then restored to the funnel plot, and a set of imputed “unpublished” studies are added to the funnel plot as  mirror images of the previously trimmed outlier studies, in order to achieve symmetry. The key point is that  the vertical axis of symmetry around which the imputed studies should be added is the re-estimated summary effect measure after trimming. which are mirror images of published studies. These hypothesised studies, which are supposed to have never seen the light of day, are added into the pool of extant studies in order to acheive symmetry of the funnel plot of study results. I am not going to discuss here the range of views on this and other methods for correcting hypothetical publication bias, nor the advisability of applying this adjustment technique to these particular bicycle helmet effectiveness studies. It suffices to say that if the trim-and-fill technique is to be applied at all, then it should be applied correctly.</p>
+
+<p>I noticed that figures 1 and 4 in the Elvik 2011 paper didn&#39;t look right: the hypothetical mirror-image &ldquo;fill&rdquo; studies had been added around a vertical axis of symmetry located at log(OR)=0 (ie OR=1), instead of around an axis of symmetry located at the weighted mean of the pooled results (after outliers have been trimmed), which in the case of bicycle helmets and head injuries, is considerable less than OR=1. The result of such an error is an over-adjustment the summary odds-ratio, making bicycle helmets appear less effective than they really are. </p>
+
+<p>Given these apparent errors in the figures, I thought it best to attempt to replicate the entire Elvik meta-analysis. The raw count data used in the 2000 Attewell <em>et al</em>. meta-analysis were conveniently available in an appendix to a monograph on the study (<a href="http://www.infrastructure.gov.au/roads/safety/publications/2000/pdf/Bic_Crash_5.pdf" title="Attewell, RG, Glase, K, McFadden, M (2000). Bicycle Helmets and Injury Prevention: A formal review. Canberra, Australia: Australian Transport Safety Bureau. ISBN 0 642 25514 8&quot;">Attewell 2000</a>), and these data were entered into a data file. Elvik had added the results of four more studies. Results were easily abstracted from the published paper for one of these four studies. Unfortunately the published versions of two of the studies did not include count data, as required for most meta-analyses, and instead only provided adjusted ORs with confidence limits. The fourth paper apparently included count data but these were missing from the only copy I was able to obtain electronically. </p>
+
+<p>Due to these difficulties, I wrote to Professor Elvik in late September 2012 requesting a copy of the data that he had used from these four studies. To his immense credit, Professor Elvik responded promptly, sending me a spreadsheet which contained all the data as well as all the calculations for his meta-analysis. I was a bit surprised to learn that he was using a spreadsheet to undertake meta-analysis, given that very capable and well-tested meta-analysis packages are available for Stata, R, SAS and other statistical software. The first thing I noticed in the spreadsheet were differences in the count data for three of the studies from the Attewell <em>et al</em>. meta-analysis. I went back to the original papers for those studies and found that the Attewell <em>et al</em>. data were correct but had apparently been transcribed incorrectly into the spreadsheet. These errors were relatively minor and did not materially affect the results, but nonetheless the data Elvik had used in his calculation were slightly wrong. However, I was able to obtain from the spreadsheet the counts for one of the new studies, and to determine that Elvik had estimated the variance of the adjusted odss ratios of the other three studies using the 95% confidence limits. This is not an unreasonable approach in the absence of the raw count data, although the raw counts might still have been available by contacting the authors of those studies. The spreadsheet also provided the precise continuity adjustments which Elvik had used for a few studies which included zero counts (Attewell <em>et al</em>. had excluded these studies).</p>
+
+<p>It was then very straightforward to replicate the meta-analysis, including the trim-and-fill publication bias adjustment, using the <em>meta</em> package for R. The R code which loads the data into a data frame named <em>studies</em> is in the source code of this document, but won&#39;t be shown here. First we&#39;ll repeat the meta-analysis for the head injury outcome studies from Attewell <em>et al</em> and examine the results.</p>
+
+<pre><code class="r">head.attewell &lt;- studies[which(studies$injury.type == &quot;head&quot; &amp; studies$meta.analysis == 
+    &quot;A&quot;), ]
+head.attewell.meta &lt;- metagen(TE = yi, seTE = sei, studlab = study.label, data = head.attewell, 
+    method.bias = &quot;rank&quot;, label.e = &quot;Injured&quot;, label.c = &quot;Not injured&quot;, sm = &quot;OR&quot;)
+summary(head.attewell.meta)
+</code></pre>
+
+<pre><code>## Number of studies combined: k=13
+## 
+##                         OR          95%-CI       z  p.value
+## Fixed effect model   0.418  [0.373; 0.468] -15.109 &lt; 0.0001
+## Random effects model 0.386  [0.281; 0.531]  -5.847 &lt; 0.0001
+## 
+## Quantifying heterogeneity:
+## tau^2 = 0.1915; H = 2.14 [1.64; 2.78]; I^2 = 78.1% [63%; 87.1%]
+## 
+## Test of heterogeneity:
+##      Q d.f.  p.value
+##  54.85   12 &lt; 0.0001
+## 
+## Details on meta-analytical method:
+## - Inverse variance method
+## - DerSimonian-Laird estimator for tau^2
+</code></pre>
+
+<p>OK, those results exactly match those given in Table 1 of the Elvik 2011 paper. Now we&#39;ll do the trim-and-fill adjustment.</p>
+
+<pre><code class="r">head.attewell.tf &lt;- trimfill(head.attewell.meta)
+summary(head.attewell.tf)
+</code></pre>
+
+<pre><code>## Number of studies combined: k=16 (with 3 added studies)
+## 
+##                         OR          95%-CI       z  p.value
+## Fixed effect model   0.425  [0.379; 0.475] -14.885 &lt; 0.0001
+## Random effects model 0.430  [0.309; 0.597]  -5.023 &lt; 0.0001
+## 
+## Quantifying heterogeneity:
+## tau^2 = 0.2253; H = 2.1 [1.65; 2.66]; I^2 = 77.3% [63.4%; 85.9%]
+## 
+## Test of heterogeneity:
+##      Q d.f.  p.value
+##  66.02   15 &lt; 0.0001
+## 
+## Details on meta-analytical method:
+## - Inverse variance method
+## - DerSimonian-Laird estimator for tau^2
+## - Trim-and-fill method to adjust for funnel plot asymmetry
+</code></pre>
+
+<p>Unfortunately those results are different from the corresponding results given in Table 1 of the Elvik paper. Finally, let&#39;s examine a funnel plot (the &ldquo;filled&rdquo; hypothetical studies are shown as empty circles).</p>
+
+<pre><code class="r">funnel(head.attewell.tf, log = &quot;x&quot;, main = &quot;Funnel plot of estimates of effect of bicycle helmets\non head injury - three data points added&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-4"/> </p>
+
+<p>Compare that with Figure 1 from the Elvik 2011 paper:</p>
+
+<p><img src="http://ars.els-cdn.com/content/image/1-s2.0-S000145751100008X-gr1.jpg" alt="Fig 1 from Elvik 2011"/></p>
+
+<p>The overall pattern of points for the published studies are identical in both of the figures above (well, almost identical, due to the minor data errors underlying the Elvik figure), but the hypothetical &ldquo;fill&rdquo; study results are clearly in the wrong places in the Elvik figure.</p>
+
+<p>After repeating this replication of the trim-and-fill procedure for each of the different types of injury outcome, it became clear that these errors were not confined to just these figures, but also affected all the publication bias adjustment results throughout the paper. Elvik based the conclusions of his study on these publication bias-adjusted results, and thus the correctness of the entire paper was in serious doubt.</p>
+
+<p>In early October 2012, I wrote to Professor Elvik in his capacity as author of the paper, and to Dr Karl Kim, in his capacity as co-editor of <em>Accident Analysis and Prevention</em>, alerting them to these problems (incorrect data and incorrect bias adjustment calculations), providing an earlier version of the data files and R code used in this document as supporting evidence. I suggested that the entire paper ought to be retracted, in accordance with <a href="http://publicationethics.org/files/retraction%20guidelines.pdf">COPE guidelines</a>.</p>
+
+<p>The outcome was that, in late December 2012, <em>Accident Analysis and Prevention</em> published a whole-of-paper corrigendum for the 2011 Elvik meta-analysis (<a href="http://dx.doi.org/10.1016/j.aap.2012.12.003" title="Elvik R (2012). Corrigendum to: &#39;Publication bias and time-trend bias in meta-analysis of bicycle helmet efficacy: A re-analysis of Attewell, Glase and McFadden, 2001&#39; [Accid. Anal. Prev. 43 (2011) 1245–1251]. Accident Analysis &amp; Prevention, In Press, Corrected Proof, Available online 23 December 2012.">Elvik 2012c</a>). This corrigendum was itself unusual, because it included not just corrected calculations, but also a substantial amount of new material which did not appear in the original paper.</p>
+
+<h2>Other meta-analysis papers by Elvik</h2>
+
+<p>It appears that three other published papers of which Elvik was the sole author or a co-author are also affected by trim-and-fill publication bias errors (<a href="http://dx.doi.org/10.3141/2147-01" title="Høye A, Elvik R (2010). Publication Bias in Road Safety Evaluation: How Can It Be Detected and How Common Is It? Transportation Research Record: Journal of the Transportation Research Board Volume 2147 pp 1-8.">Høye &amp; Elvik 2010</a>, <a href="http://dx.doi.org/10.3141/2236-03" title="Elvik R. (2011) Effects of Mobile Phone Use on Accident Risk: Problems of Meta-Analysis When Studies Are Few and Bad. Transportation Research Record: Journal of the Transportation Research Board Issue 2236 pp 20-26.">Elvik 2011b</a>, <a href="http://dx.doi.org/10.1016/j.aap.2012.06.017" title="Elvik R. Risk of road accident associated with the use of drugs: A systematic review and meta-analysis of evidence from epidemiological studies. Accident Analysis &amp; Prevention, Withdrawn Article in Press, Available online 9 July 2012. PMID: 22785089">Elvik 2012a</a>).The authors of the papers and editors of the journals were all alerted to these errors shortly after they were discovered in October 2012. At the time of writing, one of these papers has already been withdrawn by the journal in which it was published (<a href="http://dx.doi.org/10.1016/j.aap.2012.06.017" title="Elvik R. Risk of road accident associated with the use of drugs: A systematic review and meta-analysis of evidence from epidemiological studies. Accident Analysis &amp; Prevention, Withdrawn Article in Press, Available online 9 July 2012. PMID: 22785089">Elvik 2012a</a>). There is one other paper by Elvik which relies on incorrect results from the 2011 bicycle helmet meta-analysis which will also need to be corrected (<a href="http://dx.doi.org/10.1016/j.aap.2011.07.016" title="Elvik R. (2012). The range of replications technique for assessing the external validity of road safety evaluation studies. Accident Analysis &amp; Prevention Volume 45, March 2012, Pages 272–280. PMID: 22269510">Elvik 2012b</a>).</p>
+
+<p>But the story doesn&#39;t end there.</p>
+
+<h2>Problems with the corrigendum</h2>
+
+<p>Given the problems with the 2011 meta-analysis, I thought it wise to try to replicate all the results in the corrigendum. This was easily done using the raw study data I had previously assembled. First I abstracted the fixed-effects and random-effects summary results from Table 4 of the corrigendum into a data file, to permit convenient comparisons with the results of my replication. This was loaded as a data frame named <em>results</em>. The following code was used to attempt to repliacte the table 4 results:</p>
+
+<pre><code class="r"># Calculate summary estimates for each group of studies as per Elvik 2012
+# corrigendum table 4 Note that metagen() uses DerSimonian-Laird pooling
+# as default, and we specify the rank method as used by Elvik as the bias
+# detection algorithm
+
+subset.meta &lt;- function(studies, injury.type, studies.included) {
+    if (studies.included == &quot;Attewell&quot;) {
+        meta.analysis &lt;- c(&quot;A&quot;)
+    }
+    if (studies.included == &quot;new&quot;) {
+        meta.analysis &lt;- c(&quot;E&quot;)
+    }
+    if (studies.included == &quot;all&quot;) {
+        meta.analysis &lt;- c(&quot;A&quot;, &quot;E&quot;)
+    }
+    injury.type.string &lt;- paste(injury.type, collapse = &quot;-&quot;)
+    dfsubset &lt;- studies[which(studies$injury.type %in% injury.type &amp; studies$meta.analysis %in% 
+        meta.analysis), ]
+    ma &lt;- metagen(TE = yi, seTE = sei, studlab = study.label, data = dfsubset, 
+        method.bias = &quot;rank&quot;, label.e = &quot;Injured&quot;, label.c = &quot;Not injured&quot;, 
+        sm = &quot;OR&quot;)
+    subset.ma.results &lt;- data.frame(source = &quot;replica&quot;, injury.type = injury.type.string, 
+        studies.included = studies.included, num.studies = ma$k, FE.OR = exp(ma$TE.fixed), 
+        FE.LL95 = exp(ma$lower.fixed), FE.UL95 = exp(ma$upper.fixed), RE.OR = exp(ma$TE.random), 
+        RE.LL95 = exp(ma$lower.random), RE.UL95 = exp(ma$upper.random))
+    # print(summary(ma))
+    return(rbind(results, subset.ma.results))
+}
+
+for (injtype in list(c(&quot;head&quot;), c(&quot;face&quot;), c(&quot;neck&quot;), c(&quot;head&quot;, &quot;face&quot;, &quot;neck&quot;))) {
+    for (studies.incl in list(&quot;Attewell&quot;, &quot;new&quot;, &quot;all&quot;)) {
+        results &lt;- subset.meta(studies, injtype, studies.incl)
+    }
+}
+</code></pre>
+
+<p>After sorting the results, we can examine them for discrepencies.</p>
+
+<pre><code class="r">print(xtable(results[, c(1, 2, 3, 4, 5, 11, 8, 12)], digits = 2), type = &quot;html&quot;, 
+    include.rownames = T)
+</code></pre>
+
+<!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
+
+<!-- Sun Mar 10 17:28:56 2013 -->
+
+<TABLE border=1>
+<TR> <TH>  </TH> <TH> Source </TH> <TH> Injury Type </TH> <TH> Studies </TH> <TH> n </TH> <TH> Fixed-effects OR </TH> <TH> FE OR 9% CI </TH> <TH> Random-effects OR </TH> <TH> RE OR 95% CI </TH>  </TR>
+  <TR> <TD align="right"> 1 </TD> <TD> Elvik </TD> <TD> head </TD> <TD> Attewell </TD> <TD align="right">  13 </TD> <TD align="right"> 0.42 </TD> <TD> ( 0.37 - 0.47 ) </TD> <TD align="right"> 0.38 </TD> <TD> ( 0.28 - 0.53 ) </TD> </TR>
+  <TR> <TD align="right"> 13 </TD> <TD> replica </TD> <TD> head </TD> <TD> Attewell </TD> <TD align="right">  13 </TD> <TD align="right"> 0.42 </TD> <TD> ( 0.37 - 0.47 ) </TD> <TD align="right"> 0.39 </TD> <TD> ( 0.28 - 0.53 ) </TD> </TR>
+  <TR> <TD align="right"> 2 </TD> <TD> Elvik </TD> <TD> head </TD> <TD> new </TD> <TD align="right">   5 </TD> <TD align="right"> 0.71 </TD> <TD> ( 0.62 - 0.82 ) </TD> <TD align="right"> 0.58 </TD> <TD> ( 0.41 - 0.84 ) </TD> </TR>
+  <TR> <TD align="right"> 14 </TD> <TD> replica </TD> <TD> head </TD> <TD> new </TD> <TD align="right">   5 </TD> <TD align="right"> 0.71 </TD> <TD> ( 0.62 - 0.82 ) </TD> <TD align="right"> 0.58 </TD> <TD> ( 0.41 - 0.84 ) </TD> </TR>
+  <TR> <TD align="right"> 3 </TD> <TD> Elvik </TD> <TD> head </TD> <TD> all </TD> <TD align="right">  18 </TD> <TD align="right"> 0.51 </TD> <TD> ( 0.47 - 0.56 ) </TD> <TD align="right"> 0.46 </TD> <TD> ( 0.36 - 0.58 ) </TD> </TR>
+  <TR> <TD align="right"> 15 </TD> <TD> replica </TD> <TD> head </TD> <TD> all </TD> <TD align="right">  18 </TD> <TD align="right"> 0.51 </TD> <TD> ( 0.47 - 0.56 ) </TD> <TD align="right"> 0.43 </TD> <TD> ( 0.33 - 0.57 ) </TD> </TR>
+  <TR> <TD align="right"> 4 </TD> <TD> Elvik </TD> <TD> face </TD> <TD> Attewell </TD> <TD align="right">   8 </TD> <TD align="right"> 0.63 </TD> <TD> ( 0.56 - 0.71 ) </TD> <TD align="right"> 0.56 </TD> <TD> ( 0.42 - 0.74 ) </TD> </TR>
+  <TR> <TD align="right"> 16 </TD> <TD> replica </TD> <TD> face </TD> <TD> Attewell </TD> <TD align="right">   8 </TD> <TD align="right"> 0.63 </TD> <TD> ( 0.56 - 0.71 ) </TD> <TD align="right"> 0.56 </TD> <TD> ( 0.42 - 0.74 ) </TD> </TR>
+  <TR> <TD align="right"> 5 </TD> <TD> Elvik </TD> <TD> face </TD> <TD> new </TD> <TD align="right">   3 </TD> <TD align="right"> 0.94 </TD> <TD> ( 0.81 - 1.1 ) </TD> <TD align="right"> 1.20 </TD> <TD> ( 0.72 -   2 ) </TD> </TR>
+  <TR> <TD align="right"> 17 </TD> <TD> replica </TD> <TD> face </TD> <TD> new </TD> <TD align="right">   3 </TD> <TD align="right"> 0.94 </TD> <TD> ( 0.81 - 1.1 ) </TD> <TD align="right"> 1.20 </TD> <TD> ( 0.71 -   2 ) </TD> </TR>
+  <TR> <TD align="right"> 6 </TD> <TD> Elvik </TD> <TD> face </TD> <TD> all </TD> <TD align="right">  11 </TD> <TD align="right"> 0.74 </TD> <TD> ( 0.67 - 0.81 ) </TD> <TD align="right"> 0.67 </TD> <TD> ( 0.52 - 0.86 ) </TD> </TR>
+  <TR> <TD align="right"> 18 </TD> <TD> replica </TD> <TD> face </TD> <TD> all </TD> <TD align="right">  11 </TD> <TD align="right"> 0.73 </TD> <TD> ( 0.67 - 0.81 ) </TD> <TD align="right"> 0.71 </TD> <TD> ( 0.55 - 0.92 ) </TD> </TR>
+  <TR> <TD align="right"> 7 </TD> <TD> Elvik </TD> <TD> neck </TD> <TD> Attewell </TD> <TD align="right">   3 </TD> <TD align="right"> 1.36 </TD> <TD> (   1 - 1.9 ) </TD> <TD align="right"> 1.40 </TD> <TD> ( 0.97 -   2 ) </TD> </TR>
+  <TR> <TD align="right"> 19 </TD> <TD> replica </TD> <TD> neck </TD> <TD> Attewell </TD> <TD align="right">   3 </TD> <TD align="right"> 1.36 </TD> <TD> (   1 - 1.9 ) </TD> <TD align="right"> 1.40 </TD> <TD> ( 0.97 -   2 ) </TD> </TR>
+  <TR> <TD align="right"> 8 </TD> <TD> Elvik </TD> <TD> neck </TD> <TD> new </TD> <TD align="right">   1 </TD> <TD align="right"> 1.24 </TD> <TD> ( 0.98 - 1.6 ) </TD> <TD align="right"> 1.24 </TD> <TD> ( 0.98 - 1.6 ) </TD> </TR>
+  <TR> <TD align="right"> 20 </TD> <TD> replica </TD> <TD> neck </TD> <TD> new </TD> <TD align="right">   1 </TD> <TD align="right"> 1.24 </TD> <TD> ( 0.98 - 1.6 ) </TD> <TD align="right"> 1.24 </TD> <TD> ( 0.98 - 1.6 ) </TD> </TR>
+  <TR> <TD align="right"> 9 </TD> <TD> Elvik </TD> <TD> neck </TD> <TD> all </TD> <TD align="right">   4 </TD> <TD align="right"> 1.28 </TD> <TD> ( 1.1 - 1.6 ) </TD> <TD align="right"> 1.29 </TD> <TD> ( 1.1 - 1.6 ) </TD> </TR>
+  <TR> <TD align="right"> 21 </TD> <TD> replica </TD> <TD> neck </TD> <TD> all </TD> <TD align="right">   4 </TD> <TD align="right"> 1.28 </TD> <TD> ( 1.1 - 1.6 ) </TD> <TD align="right"> 1.28 </TD> <TD> ( 1.1 - 1.6 ) </TD> </TR>
+  <TR> <TD align="right"> 10 </TD> <TD> Elvik </TD> <TD> head-face-neck </TD> <TD> Attewell </TD> <TD align="right">  24 </TD> <TD align="right"> 0.54 </TD> <TD> ( 0.5 - 0.59 ) </TD> <TD align="right"> 0.62 </TD> <TD> ( 0.52 - 0.75 ) </TD> </TR>
+  <TR> <TD align="right"> 22 </TD> <TD> replica </TD> <TD> head-face-neck </TD> <TD> Attewell </TD> <TD align="right">  24 </TD> <TD align="right"> 0.54 </TD> <TD> ( 0.5 - 0.59 ) </TD> <TD align="right"> 0.52 </TD> <TD> ( 0.41 - 0.66 ) </TD> </TR>
+  <TR> <TD align="right"> 11 </TD> <TD> Elvik </TD> <TD> head-face-neck </TD> <TD> new </TD> <TD align="right">   9 </TD> <TD align="right"> 0.87 </TD> <TD> ( 0.79 - 0.95 ) </TD> <TD align="right"> 1.02 </TD> <TD> ( 0.84 - 1.2 ) </TD> </TR>
+  <TR> <TD align="right"> 23 </TD> <TD> replica </TD> <TD> head-face-neck </TD> <TD> new </TD> <TD align="right">   9 </TD> <TD align="right"> 0.87 </TD> <TD> ( 0.79 - 0.95 ) </TD> <TD align="right"> 0.85 </TD> <TD> ( 0.66 - 1.1 ) </TD> </TR>
+  <TR> <TD align="right"> 12 </TD> <TD> Elvik </TD> <TD> head-face-neck </TD> <TD> all </TD> <TD align="right">  33 </TD> <TD align="right"> 0.66 </TD> <TD> ( 0.62 - 0.7 ) </TD> <TD align="right"> 0.79 </TD> <TD> ( 0.69 - 0.9 ) </TD> </TR>
+  <TR> <TD align="right"> 24 </TD> <TD> replica </TD> <TD> head-face-neck </TD> <TD> all </TD> <TD align="right">  33 </TD> <TD align="right"> 0.66 </TD> <TD> ( 0.62 - 0.7 ) </TD> <TD align="right"> 0.60 </TD> <TD> ( 0.5 - 0.73 ) </TD> </TR>
+   </TABLE>
+
+<p>As can be seen from the output above, the replication agrees precisely with the fixed-effects summary OR estimates (and confidence intervals) which are given in the Elvik corrigendum. This agreement proves that the underlying data used in this replication is the same as that used by Elvik for the corrigendum.</p>
+
+<p>However, several of the random-effects summary OR estimates are different, some of the them quite different. This appears to be the case wherever both the Attewell and the new studies are combined (the &ldquo;all&rdquo; rows), and for all the combined head, nface and neck results. This points to an error in the way Elvik has done the random-effects calculations in his spreadsheet. Close scrutiny of the spreadsheet supplied by Professor Elvik reveals several possible sources of these calculation errors, although I cannot be sure because spreadsheets are difficult to debug and reverse-engineer at the best of times, and doubly so when constructed by someone else. Nonetheless, the Elvik results as they appear in the corrigendum definitely appear to be incorrect.</p>
+
+<p>Could the R <em>meta</em> package be wrong? This is unlikely because it has been available for many years and has been widely used. Nevertheless, as an additional check, I replicated the meta-analysis in Stata 12.1 using the <em>metan</em> add-in. This produced exactly the same results as the <em>meta</em> package in R.</p>
+
+<p>Elvik bases the conclusions to his paper (both original and corrected versions) on the publication bias adjusted random-effects summary estimates for both old and new studies combined, and for head, face and neck outcomes combines. Unfortunately, these are the very results which are affected by the calculation errors which are apparent in the corrigendum.</p>
+
+<p>How bad are the errors? Elvik states in his conclusion: </p>
+
+<blockquote>
+<p>When the analysis is updated by adding four new studies, the protective effects attributed to to bicycle helmets are further reduced. According to the new studies, no overall effect of bicycle helmets could be found when injuries to head, face or neck are considered as a whole.
+Presumably this conclusion was drawn on the basis of the publication-bias-adjusted fixed-effcts and random-effects summary ORs for head, face and neck outcomes combined, as given by Elvik in Table 4 of the corrigendum. For the &ldquo;new&rdquo; studies, these are: fixed-effects adjusted summary OR=0.89 (95% CI 0.82 - 0.98) and random-effects bias-adjusted summary OR=1.03 (95% CI 0.86 - 1.24).</p>
+</blockquote>
+
+<p>Let&#39;s try to replicate those results:</p>
+
+<pre><code class="r">studies.hfn.new &lt;- studies[which(studies$injury.type %in% c(&quot;head&quot;, &quot;face&quot;, 
+    &quot;neck&quot;) &amp; studies$meta.analysis == &quot;E&quot;), ]
+hfn.new.meta &lt;- metagen(TE = yi, seTE = sei, studlab = study.label, data = studies.hfn.new, 
+    method.bias = &quot;rank&quot;, label.e = &quot;Injured&quot;, label.c = &quot;Not injured&quot;, sm = &quot;OR&quot;)
+hfn.new.tf &lt;- trimfill(hfn.new.meta)
+summary(hfn.new.tf)
+</code></pre>
+
+<pre><code>## Number of studies combined: k=10 (with 1 added studies)
+## 
+##                         OR          95%-CI      z  p.value
+## Fixed effect model   0.872  [0.793; 0.959] -2.835   0.0046
+## Random effects model 0.880  [0.673; 1.151] -0.933   0.3508
+## 
+## Quantifying heterogeneity:
+## tau^2 = 0.1173; H = 2.3 [1.72; 3.07]; I^2 = 81.1% [66.2%; 89.4%]
+## 
+## Test of heterogeneity:
+##      Q d.f.  p.value
+##  47.52    9 &lt; 0.0001
+## 
+## Details on meta-analytical method:
+## - Inverse variance method
+## - DerSimonian-Laird estimator for tau^2
+## - Trim-and-fill method to adjust for funnel plot asymmetry
+</code></pre>
+
+<p>The <em>trimfill()</em> function in <em>meta</em> only adds one hypothetical fill study, whereas Elvik adds two, but neither of the adjusted summary ORs are anywhere new those reported by Elvik. Similarly, the &ldquo;headline&rdquo; result of the Elvik meta-analysis has been the publictaion bias-adjusted random-effects summary OR for all studies, both old and new, for head, face abd neck injuries combined. In the corrigendum, Elvik calculates this as 0.82 (95% CI 0.72 - 0.93). Here is what we get:</p>
+
+<pre><code>## Number of studies combined: k=39 (with 6 added studies)
+## 
+##                         OR          95%-CI       z  p.value
+## Fixed effect model   0.669  [0.630; 0.711] -13.053 &lt; 0.0001
+## Random effects model 0.673  [0.552; 0.820]  -3.929 &lt; 0.0001
+## 
+## Quantifying heterogeneity:
+## tau^2 = 0.2448; H = 2.7 [2.37; 3.07]; I^2 = 86.2% [82.1%; 89.4%]
+## 
+## Test of heterogeneity:
+##       Q d.f.  p.value
+##  276.25   38 &lt; 0.0001
+## 
+## Details on meta-analytical method:
+## - Inverse variance method
+## - DerSimonian-Laird estimator for tau^2
+## - Trim-and-fill method to adjust for funnel plot asymmetry
+</code></pre>
+
+<p>I wrote to Professor Elvik and his co-editor Dr Karl Kim on 30th December 2012 to alert them to these apparent calculation errors in the corrigendum, once again providing data files and both R and Stata code in support of my findings. It now seems clear that both the original Elvik meta-analysis and the corrigendum ought to be retracted in their entirety, given the pervasive nature of these calculation errors. A whole-of-paper corrigendum for a whole-of-paper corrigendum is not tenable: Elvik should be required to go back to square one and re-submit a completely new paper for a completely fresh, and it is hoped, more thorough peer-review. To date, I have been notified by an Elsevier representative that the matter is under investigation. Note that there is no hint whatsoever of falsification or any deliberate wrong-doing - these are all just unfortunate errors, albeit ones which might have been avoided or detected earlier had things been done differently.</p>
+
+<h2>Conclusions and Recommendations</h2>
+
+<p>Firstly, Professor Elvik must be congratulated for freely sharing the spreadsheet which contained both the data and the calculations that he used. Although it would have been possible to replicate the meta-analysis without this, quite a lot more time and expense would have been involved. Of course, there is no reason why the raw data used in any meta-analysis cannot routinely be made available as a supplement to each and every published meta-analysis - ideally in machine-readable format to avoid transcription errors. There are no confidentiality concerns in meta-analyses, because the data is harvested from already-published papers.</p>
+
+<p>Secondly, it is rarely advisable to undertake complex epidemiological and statistical calculations using a spreadsheet, especially when well-tested softare packages to do the same thing are raedily available. Spreadsheets are just too hard to debug and audit.</p>
+
+<p>Finally, there is a strong case to be made for authors making their programme code (including spreadsheets) available to both peer-reviewers and readers, even if the data can&#39;t be released for confidentiality or other reasons.</p>
+
+</body>
+
+</html>
+
