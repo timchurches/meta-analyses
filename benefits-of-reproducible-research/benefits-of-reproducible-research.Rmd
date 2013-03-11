@@ -135,8 +135,8 @@ After sorting the results, we can examine them for discrepancies.
 results$injury.type <- ordered(results$injury.type,levels=c("head","face","neck","head-face-neck"))
 results$studies.included <- ordered(results$studies.included,levels=c("old","new","all"))
 results <- results[order(results$injury.type,results$studies.included,results$source),]
-results$FE.CI <- with(results,paste("(",formatC(FE.LL95,digits=2),"-",formatC(FE.UL95,digits=2),")"))
-results$RE.CI <- with(results,paste("(",formatC(RE.LL95,digits=2),"-",formatC(RE.UL95,digits=2),")"))
+results$FE.CI <- with(results,paste("(",formatC(FE.LL95,digits=2),"-",formatC(FE.UL95,digits=2),")",sep=""))
+results$RE.CI <- with(results,paste("(",formatC(RE.LL95,digits=2),"-",formatC(RE.UL95,digits=2),")",sep=""))
 colnames(results) <- c("Source","Injury Type","Studies","n","Fixed-effects OR","FE OR 95% LL","FE OR 95% UL","Random-effects OR","RE OR 95% LL","RE OR 95% UL","(FE 95% CI)","(RE 95% CI)")
 ```
 ```{r table, results='asis'} 
