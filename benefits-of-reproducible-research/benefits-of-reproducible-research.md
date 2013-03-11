@@ -6,7 +6,7 @@ Sydney, Australia
 
 About this document
 -------------------
-This document is an example of [literate programming](http://en.wikipedia.org/wiki/Literate_programming), in which computer program code is interleaved with expository text and the output of the computer code. The document was created in markdown format using [RStudio](http://www.rstudio.com) and the [_knitr_](http://yihui.name/knitr/) package for the [R statistical environment](http://www.r-project.org). The source file for this document, together with the data files it uses, are freely available on [GitHub](https://github.com/timchurches/meta-analyses/tree/master/benefits-of-reproducible-research) under the terms of the [Creative Commons Attribution-ShareAlike 3.0 Australia license](http://http://creativecommons.org/licenses/by-sa/3.0/au/), with the exception of the link to the figure from the journal _Accident Analysis and Prevention_, which is copyright Elsevier Pty Ltd. 
+This document is an example of [literate programming](http://en.wikipedia.org/wiki/Literate_programming), in which expository text is interleaved with computer program code and the output of that code. The document was created in markdown format using [RStudio](http://www.rstudio.com) and the [_knitr_](http://yihui.name/knitr/) package for the [R statistical environment](http://www.r-project.org). The source file for this document, which includes all the programme code required to create the output shown, as well as the data files read by that programme code, are all freely available on [GitHub](https://github.com/timchurches/meta-analyses/tree/master/benefits-of-reproducible-research) under the terms of the [Creative Commons Attribution-ShareAlike 3.0 Australia license](http://http://creativecommons.org/licenses/by-sa/3.0/au/), with the exception of the link to the figure from the journal _Accident Analysis and Prevention_, which is copyright Elsevier Pty Ltd. 
 
 Pre-amble
 ---------
@@ -163,7 +163,7 @@ print(xtable(results[, c(1, 2, 3, 4, 5, 11, 8, 12)], digits = 2), type = "html",
 ```
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
-<!-- Mon Mar 11 06:53:45 2013 -->
+<!-- Mon Mar 11 15:45:40 2013 -->
 <TABLE border=1>
 <TR> <TH> Source </TH> <TH> Injury Type </TH> <TH> Studies </TH> <TH> Number </TH> <TH> Fixed-effects OR </TH> <TH> (FE 95% CI) </TH> <TH> Random-effects OR </TH> <TH> (RE 95% CI) </TH>  </TR>
   <TR> <TD> Elvik </TD> <TD> head </TD> <TD> Attewell </TD> <TD align="right">  13 </TD> <TD align="right"> 0.42 </TD> <TD> ( 0.37 - 0.47 ) </TD> <TD align="right"> 0.38 </TD> <TD> ( 0.28 - 0.53 ) </TD> </TR>
