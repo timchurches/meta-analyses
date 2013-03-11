@@ -114,7 +114,7 @@ subset.meta <- function(studies, injury.type, studies.included) {
   if (studies.included == "old") { meta.analysis <- c("A")} 
   if (studies.included == "new") { meta.analysis <- c("E")}
   if (studies.included == "all") { meta.analysis <- c("A","E")}
-  injury.type.string <- paste(injury.type,collapse=",")
+  injury.type.string <- paste(injury.type,collapse="/")
   dfsubset <- studies[which(studies$injury.type %in% injury.type & studies$meta.analysis %in% meta.analysis),] 
   ma <- metagen(TE=yi,seTE=sei,studlab=study.label,data=dfsubset,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
   subset.ma.results <- data.frame(source="replica", injury.type=injury.type.string, studies.included=studies.included, num.studies=ma$k, FE.OR=exp(ma$TE.fixed), 
@@ -132,7 +132,7 @@ for(injtype in list(c("head"),c("face"),c("neck"),c("head","face","neck"))) {
 ```
 After sorting the results, we can examine them for discrepancies.
 ```{r echo=FALSE, message=FALSE, results='hide'}
-results$injury.type <- ordered(results$injury.type,levels=c("head","face","neck","head,face,neck"))
+results$injury.type <- ordered(results$injury.type,levels=c("head","face","neck","head/face/neck"))
 results$studies.included <- ordered(results$studies.included,levels=c("old","new","all"))
 results <- results[order(results$injury.type,results$studies.included,results$source),]
 results$FE.CI <- with(results,paste("(",formatC(FE.LL95,digits=2),"-",formatC(FE.UL95,digits=2),")",sep=""))

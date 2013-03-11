@@ -8,6 +8,6 @@ Elvik,face,all,11,0.74,0.67,0.81,0.67,0.52,0.86
 Elvik,neck,old,3,1.36,1.00,1.86,1.40,0.97,2.02
 Elvik,neck,new,1,1.24,0.98,1.57,1.24,0.98,1.57
 Elvik,neck,all,4,1.28,1.06,1.55,1.29,1.05,1.57
-Elvik,head-face-neck,old,24,0.54,0.50,0.59,0.62,0.52,0.75
-Elvik,head-face-neck,new,9,0.87,0.79,0.95,1.02,0.84,1.22
-Elvik,head-face-neck,all,33,0.66,0.62,0.70,0.79,0.69,0.90
+Elvik,head/face/neck,old,24,0.54,0.50,0.59,0.62,0.52,0.75
+Elvik,head/face/neck,new,9,0.87,0.79,0.95,1.02,0.84,1.22
+Elvik,head/face/neck,all,33,0.66,0.62,0.70,0.79,0.69,0.90

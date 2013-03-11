@@ -132,7 +132,7 @@ subset.meta <- function(studies, injury.type, studies.included) {
     if (studies.included == "all") {
         meta.analysis <- c("A", "E")
     }
-    injury.type.string <- paste(injury.type, collapse = ",")
+    injury.type.string <- paste(injury.type, collapse = "/")
     dfsubset <- studies[which(studies$injury.type %in% injury.type & studies$meta.analysis %in% 
         meta.analysis), ]
     ma <- metagen(TE = yi, seTE = sei, studlab = study.label, data = dfsubset, 
@@ -163,7 +163,7 @@ print(xtable(results[, c(1, 2, 3, 4, 5, 11, 8, 12)], digits = 2), type = "html",
 ```
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
-<!-- Mon Mar 11 18:25:47 2013 -->
+<!-- Mon Mar 11 18:29:44 2013 -->
 <TABLE border=1>
 <TR> <TH> Source </TH> <TH> Injury Type </TH> <TH> Studies </TH> <TH> n </TH> <TH> Fixed-effects OR </TH> <TH> (FE 95% CI) </TH> <TH> Random-effects OR </TH> <TH> (RE 95% CI) </TH>  </TR>
   <TR> <TD> Elvik </TD> <TD> head </TD> <TD> old </TD> <TD align="right">  13 </TD> <TD align="right"> 0.42 </TD> <TD> (0.37-0.47) </TD> <TD align="right"> 0.38 </TD> <TD> (0.28-0.53) </TD> </TR>
@@ -184,12 +184,12 @@ print(xtable(results[, c(1, 2, 3, 4, 5, 11, 8, 12)], digits = 2), type = "html",
   <TR> <TD> replica </TD> <TD> neck </TD> <TD> new </TD> <TD align="right">   1 </TD> <TD align="right"> 1.24 </TD> <TD> (0.98-1.6) </TD> <TD align="right"> 1.24 </TD> <TD> (0.98-1.6) </TD> </TR>
   <TR> <TD> Elvik </TD> <TD> neck </TD> <TD> all </TD> <TD align="right">   4 </TD> <TD align="right"> 1.28 </TD> <TD> (1.1-1.6) </TD> <TD align="right"> 1.29 </TD> <TD> (1.1-1.6) </TD> </TR>
   <TR> <TD> replica </TD> <TD> neck </TD> <TD> all </TD> <TD align="right">   4 </TD> <TD align="right"> 1.28 </TD> <TD> (1.1-1.6) </TD> <TD align="right"> 1.28 </TD> <TD> (1.1-1.6) </TD> </TR>
-  <TR> <TD> replica </TD> <TD> head,face,neck </TD> <TD> old </TD> <TD align="right">  24 </TD> <TD align="right"> 0.54 </TD> <TD> (0.5-0.59) </TD> <TD align="right"> 0.52 </TD> <TD> (0.41-0.66) </TD> </TR>
-  <TR> <TD> replica </TD> <TD> head,face,neck </TD> <TD> new </TD> <TD align="right">   9 </TD> <TD align="right"> 0.87 </TD> <TD> (0.79-0.95) </TD> <TD align="right"> 0.85 </TD> <TD> (0.66-1.1) </TD> </TR>
-  <TR> <TD> replica </TD> <TD> head,face,neck </TD> <TD> all </TD> <TD align="right">  33 </TD> <TD align="right"> 0.66 </TD> <TD> (0.62-0.7) </TD> <TD align="right"> 0.60 </TD> <TD> (0.5-0.73) </TD> </TR>
-  <TR> <TD> Elvik </TD> <TD>  </TD> <TD> old </TD> <TD align="right">  24 </TD> <TD align="right"> 0.54 </TD> <TD> (0.5-0.59) </TD> <TD align="right"> 0.62 </TD> <TD> (0.52-0.75) </TD> </TR>
-  <TR> <TD> Elvik </TD> <TD>  </TD> <TD> new </TD> <TD align="right">   9 </TD> <TD align="right"> 0.87 </TD> <TD> (0.79-0.95) </TD> <TD align="right"> 1.02 </TD> <TD> (0.84-1.2) </TD> </TR>
-  <TR> <TD> Elvik </TD> <TD>  </TD> <TD> all </TD> <TD align="right">  33 </TD> <TD align="right"> 0.66 </TD> <TD> (0.62-0.7) </TD> <TD align="right"> 0.79 </TD> <TD> (0.69-0.9) </TD> </TR>
+  <TR> <TD> Elvik </TD> <TD> head/face/neck </TD> <TD> old </TD> <TD align="right">  24 </TD> <TD align="right"> 0.54 </TD> <TD> (0.5-0.59) </TD> <TD align="right"> 0.62 </TD> <TD> (0.52-0.75) </TD> </TR>
+  <TR> <TD> replica </TD> <TD> head/face/neck </TD> <TD> old </TD> <TD align="right">  24 </TD> <TD align="right"> 0.54 </TD> <TD> (0.5-0.59) </TD> <TD align="right"> 0.52 </TD> <TD> (0.41-0.66) </TD> </TR>
+  <TR> <TD> Elvik </TD> <TD> head/face/neck </TD> <TD> new </TD> <TD align="right">   9 </TD> <TD align="right"> 0.87 </TD> <TD> (0.79-0.95) </TD> <TD align="right"> 1.02 </TD> <TD> (0.84-1.2) </TD> </TR>
+  <TR> <TD> replica </TD> <TD> head/face/neck </TD> <TD> new </TD> <TD align="right">   9 </TD> <TD align="right"> 0.87 </TD> <TD> (0.79-0.95) </TD> <TD align="right"> 0.85 </TD> <TD> (0.66-1.1) </TD> </TR>
+  <TR> <TD> Elvik </TD> <TD> head/face/neck </TD> <TD> all </TD> <TD align="right">  33 </TD> <TD align="right"> 0.66 </TD> <TD> (0.62-0.7) </TD> <TD align="right"> 0.79 </TD> <TD> (0.69-0.9) </TD> </TR>
+  <TR> <TD> replica </TD> <TD> head/face/neck </TD> <TD> all </TD> <TD align="right">  33 </TD> <TD align="right"> 0.66 </TD> <TD> (0.62-0.7) </TD> <TD align="right"> 0.60 </TD> <TD> (0.5-0.73) </TD> </TR>
    </TABLE>
 
 
