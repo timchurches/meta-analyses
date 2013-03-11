@@ -88,7 +88,7 @@ After repeating this replication of the trim-and-fill procedure for each of the 
 
 In early October 2012, I wrote to Professor Elvik in his capacity as author of the paper, and to Dr Karl Kim, in his capacity as co-editor of _Accident Analysis & Prevention_, alerting them to these problems (incorrect data and incorrect bias adjustment calculations), providing an earlier version of the data files and R code used in this document as supporting evidence. I suggested that the entire paper ought to be retracted, in accordance with [COPE guidelines](http://publicationethics.org/files/retraction%20guidelines.pdf).
 
-In late December 2012, _Accident Analysis and Prevention_ published a whole-of-paper corrigendum for the 2011 Elvik meta-analysis ([Elvik 2012c]). This nine-page corrigendum was itself unusual, because it included not just corrected calculations, but also a substantial amount of new material which did not appear in the seven-page original paper.
+In late December 2012, _Accident Analysis & Prevention_ published a whole-of-paper corrigendum for the 2011 Elvik meta-analysis ([Elvik 2012c]). This nine-page corrigendum was itself unusual, because it included not just corrected calculations, but also a substantial amount of new material which did not appear in the seven-page original paper.
 
 Other meta-analysis papers by Elvik
 -----------------------------------
@@ -114,7 +114,7 @@ subset.meta <- function(studies, injury.type, studies.included) {
   if (studies.included == "old") { meta.analysis <- c("A")} 
   if (studies.included == "new") { meta.analysis <- c("E")}
   if (studies.included == "all") { meta.analysis <- c("A","E")}
-  injury.type.string <- paste(injury.type,collapse="-")
+  injury.type.string <- paste(injury.type,collapse=",")
   dfsubset <- studies[which(studies$injury.type %in% injury.type & studies$meta.analysis %in% meta.analysis),] 
   ma <- metagen(TE=yi,seTE=sei,studlab=study.label,data=dfsubset,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
   subset.ma.results <- data.frame(source="replica", injury.type=injury.type.string, studies.included=studies.included, num.studies=ma$k, FE.OR=exp(ma$TE.fixed), 
@@ -132,7 +132,7 @@ for(injtype in list(c("head"),c("face"),c("neck"),c("head","face","neck"))) {
 ```
 After sorting the results, we can examine them for discrepancies.
 ```{r echo=FALSE, message=FALSE, results='hide'}
-results$injury.type <- ordered(results$injury.type,levels=c("head","face","neck","head-face-neck"))
+results$injury.type <- ordered(results$injury.type,levels=c("head","face","neck","head,face,neck"))
 results$studies.included <- ordered(results$studies.included,levels=c("old","new","all"))
 results <- results[order(results$injury.type,results$studies.included,results$source),]
 results$FE.CI <- with(results,paste("(",formatC(FE.LL95,digits=2),"-",formatC(FE.UL95,digits=2),")",sep=""))
@@ -145,7 +145,7 @@ print(xtable(results[,c(1,2,3,4,5,11,8,12)],digits=2),type="html",include.rownam
 
 As can be seen from this output, the replication agrees precisely with the fixed-effects summary OR estimates (and confidence intervals) which are given in the Elvik corrigendum. This agreement proves that the underlying data used in this replication is the same as that used by Elvik for the corrigendum.
 
-However, several of the random-effects summary OR estimates are different, some by a considerable margin. This appears to be the case wherever both the Attewell and the new studies are combined (the "all" rows), and for all the combined head, face and neck results. This points to an anomaly in the way in which Elvik has calculated the pooled random-effects summary estimates in his spreadsheet. Close scrutiny of the spreadsheet supplied by Professor Elvik reveals several possible sources of these anomalies, although I cannot be sure because spreadsheets are difficult to debug and reverse-engineer at the best of times, and doubly so when constructed by someone else. Nonetheless, the Elvik results as they appear in the corrigendum do appear to be irreproducible.
+However, several of the random-effects summary OR estimates are different, some by a considerable margin. This appears to be the case wherever both the old (i.e. Attewell _et al_.) and the new studies are combined (the "all" rows), and for all the combined head, face and neck results. This points to an anomaly in the way in which Elvik has calculated the pooled random-effects summary estimates in his spreadsheet. Close scrutiny of the spreadsheet supplied by Professor Elvik reveals several possible sources of these anomalies, although I cannot be sure because spreadsheets are difficult to debug and reverse-engineer at the best of times, and doubly so when constructed by someone else. Nonetheless, the Elvik results as they appear in the corrigendum do appear to be irreproducible.
 
 Could the R _meta_ package be wrong? This is unlikely because it has been available for many years and has been widely used. Nevertheless, as an additional check, I replicated the meta-analysis in Stata 12.1 using the _metan_ add-in. This produced exactly the same results as the _meta_ package in R.
 

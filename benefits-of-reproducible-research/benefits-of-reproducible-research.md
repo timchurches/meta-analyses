@@ -102,7 +102,7 @@ After repeating this replication of the trim-and-fill procedure for each of the 
 
 In early October 2012, I wrote to Professor Elvik in his capacity as author of the paper, and to Dr Karl Kim, in his capacity as co-editor of _Accident Analysis & Prevention_, alerting them to these problems (incorrect data and incorrect bias adjustment calculations), providing an earlier version of the data files and R code used in this document as supporting evidence. I suggested that the entire paper ought to be retracted, in accordance with [COPE guidelines](http://publicationethics.org/files/retraction%20guidelines.pdf).
 
-In late December 2012, _Accident Analysis and Prevention_ published a whole-of-paper corrigendum for the 2011 Elvik meta-analysis ([Elvik 2012c]). This nine-page corrigendum was itself unusual, because it included not just corrected calculations, but also a substantial amount of new material which did not appear in the seven-page original paper.
+In late December 2012, _Accident Analysis & Prevention_ published a whole-of-paper corrigendum for the 2011 Elvik meta-analysis ([Elvik 2012c]). This nine-page corrigendum was itself unusual, because it included not just corrected calculations, but also a substantial amount of new material which did not appear in the seven-page original paper.
 
 Other meta-analysis papers by Elvik
 -----------------------------------
@@ -132,7 +132,7 @@ subset.meta <- function(studies, injury.type, studies.included) {
     if (studies.included == "all") {
         meta.analysis <- c("A", "E")
     }
-    injury.type.string <- paste(injury.type, collapse = "-")
+    injury.type.string <- paste(injury.type, collapse = ",")
     dfsubset <- studies[which(studies$injury.type %in% injury.type & studies$meta.analysis %in% 
         meta.analysis), ]
     ma <- metagen(TE = yi, seTE = sei, studlab = study.label, data = dfsubset, 
@@ -163,7 +163,7 @@ print(xtable(results[, c(1, 2, 3, 4, 5, 11, 8, 12)], digits = 2), type = "html",
 ```
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
-<!-- Mon Mar 11 16:14:10 2013 -->
+<!-- Mon Mar 11 18:25:47 2013 -->
 <TABLE border=1>
 <TR> <TH> Source </TH> <TH> Injury Type </TH> <TH> Studies </TH> <TH> n </TH> <TH> Fixed-effects OR </TH> <TH> (FE 95% CI) </TH> <TH> Random-effects OR </TH> <TH> (RE 95% CI) </TH>  </TR>
   <TR> <TD> Elvik </TD> <TD> head </TD> <TD> old </TD> <TD align="right">  13 </TD> <TD align="right"> 0.42 </TD> <TD> (0.37-0.47) </TD> <TD align="right"> 0.38 </TD> <TD> (0.28-0.53) </TD> </TR>
@@ -184,18 +184,18 @@ print(xtable(results[, c(1, 2, 3, 4, 5, 11, 8, 12)], digits = 2), type = "html",
   <TR> <TD> replica </TD> <TD> neck </TD> <TD> new </TD> <TD align="right">   1 </TD> <TD align="right"> 1.24 </TD> <TD> (0.98-1.6) </TD> <TD align="right"> 1.24 </TD> <TD> (0.98-1.6) </TD> </TR>
   <TR> <TD> Elvik </TD> <TD> neck </TD> <TD> all </TD> <TD align="right">   4 </TD> <TD align="right"> 1.28 </TD> <TD> (1.1-1.6) </TD> <TD align="right"> 1.29 </TD> <TD> (1.1-1.6) </TD> </TR>
   <TR> <TD> replica </TD> <TD> neck </TD> <TD> all </TD> <TD align="right">   4 </TD> <TD align="right"> 1.28 </TD> <TD> (1.1-1.6) </TD> <TD align="right"> 1.28 </TD> <TD> (1.1-1.6) </TD> </TR>
-  <TR> <TD> Elvik </TD> <TD> head-face-neck </TD> <TD> old </TD> <TD align="right">  24 </TD> <TD align="right"> 0.54 </TD> <TD> (0.5-0.59) </TD> <TD align="right"> 0.62 </TD> <TD> (0.52-0.75) </TD> </TR>
-  <TR> <TD> replica </TD> <TD> head-face-neck </TD> <TD> old </TD> <TD align="right">  24 </TD> <TD align="right"> 0.54 </TD> <TD> (0.5-0.59) </TD> <TD align="right"> 0.52 </TD> <TD> (0.41-0.66) </TD> </TR>
-  <TR> <TD> Elvik </TD> <TD> head-face-neck </TD> <TD> new </TD> <TD align="right">   9 </TD> <TD align="right"> 0.87 </TD> <TD> (0.79-0.95) </TD> <TD align="right"> 1.02 </TD> <TD> (0.84-1.2) </TD> </TR>
-  <TR> <TD> replica </TD> <TD> head-face-neck </TD> <TD> new </TD> <TD align="right">   9 </TD> <TD align="right"> 0.87 </TD> <TD> (0.79-0.95) </TD> <TD align="right"> 0.85 </TD> <TD> (0.66-1.1) </TD> </TR>
-  <TR> <TD> Elvik </TD> <TD> head-face-neck </TD> <TD> all </TD> <TD align="right">  33 </TD> <TD align="right"> 0.66 </TD> <TD> (0.62-0.7) </TD> <TD align="right"> 0.79 </TD> <TD> (0.69-0.9) </TD> </TR>
-  <TR> <TD> replica </TD> <TD> head-face-neck </TD> <TD> all </TD> <TD align="right">  33 </TD> <TD align="right"> 0.66 </TD> <TD> (0.62-0.7) </TD> <TD align="right"> 0.60 </TD> <TD> (0.5-0.73) </TD> </TR>
+  <TR> <TD> replica </TD> <TD> head,face,neck </TD> <TD> old </TD> <TD align="right">  24 </TD> <TD align="right"> 0.54 </TD> <TD> (0.5-0.59) </TD> <TD align="right"> 0.52 </TD> <TD> (0.41-0.66) </TD> </TR>
+  <TR> <TD> replica </TD> <TD> head,face,neck </TD> <TD> new </TD> <TD align="right">   9 </TD> <TD align="right"> 0.87 </TD> <TD> (0.79-0.95) </TD> <TD align="right"> 0.85 </TD> <TD> (0.66-1.1) </TD> </TR>
+  <TR> <TD> replica </TD> <TD> head,face,neck </TD> <TD> all </TD> <TD align="right">  33 </TD> <TD align="right"> 0.66 </TD> <TD> (0.62-0.7) </TD> <TD align="right"> 0.60 </TD> <TD> (0.5-0.73) </TD> </TR>
+  <TR> <TD> Elvik </TD> <TD>  </TD> <TD> old </TD> <TD align="right">  24 </TD> <TD align="right"> 0.54 </TD> <TD> (0.5-0.59) </TD> <TD align="right"> 0.62 </TD> <TD> (0.52-0.75) </TD> </TR>
+  <TR> <TD> Elvik </TD> <TD>  </TD> <TD> new </TD> <TD align="right">   9 </TD> <TD align="right"> 0.87 </TD> <TD> (0.79-0.95) </TD> <TD align="right"> 1.02 </TD> <TD> (0.84-1.2) </TD> </TR>
+  <TR> <TD> Elvik </TD> <TD>  </TD> <TD> all </TD> <TD align="right">  33 </TD> <TD align="right"> 0.66 </TD> <TD> (0.62-0.7) </TD> <TD align="right"> 0.79 </TD> <TD> (0.69-0.9) </TD> </TR>
    </TABLE>
 
 
 As can be seen from this output, the replication agrees precisely with the fixed-effects summary OR estimates (and confidence intervals) which are given in the Elvik corrigendum. This agreement proves that the underlying data used in this replication is the same as that used by Elvik for the corrigendum.
 
-However, several of the random-effects summary OR estimates are different, some by a considerable margin. This appears to be the case wherever both the Attewell and the new studies are combined (the "all" rows), and for all the combined head, face and neck results. This points to an anomaly in the way in which Elvik has calculated the pooled random-effects summary estimates in his spreadsheet. Close scrutiny of the spreadsheet supplied by Professor Elvik reveals several possible sources of these anomalies, although I cannot be sure because spreadsheets are difficult to debug and reverse-engineer at the best of times, and doubly so when constructed by someone else. Nonetheless, the Elvik results as they appear in the corrigendum do appear to be irreproducible.
+However, several of the random-effects summary OR estimates are different, some by a considerable margin. This appears to be the case wherever both the old (i.e. Attewell _et al_.) and the new studies are combined (the "all" rows), and for all the combined head, face and neck results. This points to an anomaly in the way in which Elvik has calculated the pooled random-effects summary estimates in his spreadsheet. Close scrutiny of the spreadsheet supplied by Professor Elvik reveals several possible sources of these anomalies, although I cannot be sure because spreadsheets are difficult to debug and reverse-engineer at the best of times, and doubly so when constructed by someone else. Nonetheless, the Elvik results as they appear in the corrigendum do appear to be irreproducible.
 
 Could the R _meta_ package be wrong? This is unlikely because it has been available for many years and has been widely used. Nevertheless, as an additional check, I replicated the meta-analysis in Stata 12.1 using the _metan_ add-in. This produced exactly the same results as the _meta_ package in R.
 
