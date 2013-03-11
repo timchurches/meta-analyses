@@ -1,13 +1,13 @@
 source,injury.type,studies.included,num.studies,FE.OR,FE.LL95,FE.UL95,RE.OR,RE.LL95,RE.UL95
-Elvik,head,Attewell,13,0.42,0.37,0.47,0.38,0.28,0.53
+Elvik,head,old,13,0.42,0.37,0.47,0.38,0.28,0.53
 Elvik,head,new,5,0.71,0.62,0.82,0.58,0.41,0.84
 Elvik,head,all,18,0.51,0.47,0.56,0.46,0.36,0.58
-Elvik,face,Attewell,8,0.63,0.56,0.71,0.56,0.42,0.74
+Elvik,face,old,8,0.63,0.56,0.71,0.56,0.42,0.74
 Elvik,face,new,3,0.94,0.81,1.09,1.20,0.72,2.00
 Elvik,face,all,11,0.74,0.67,0.81,0.67,0.52,0.86
-Elvik,neck,Attewell,3,1.36,1.00,1.86,1.40,0.97,2.02
+Elvik,neck,old,3,1.36,1.00,1.86,1.40,0.97,2.02
 Elvik,neck,new,1,1.24,0.98,1.57,1.24,0.98,1.57
 Elvik,neck,all,4,1.28,1.06,1.55,1.29,1.05,1.57
-Elvik,head-face-neck,Attewell,24,0.54,0.50,0.59,0.62,0.52,0.75
+Elvik,head-face-neck,old,24,0.54,0.50,0.59,0.62,0.52,0.75
 Elvik,head-face-neck,new,9,0.87,0.79,0.95,1.02,0.84,1.22
 Elvik,head-face-neck,all,33,0.66,0.62,0.70,0.79,0.69,0.90
