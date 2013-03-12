@@ -78,12 +78,13 @@ Unfortunately those results are different from the corresponding results given i
 ```{r echo=FALSE, results="hide"}
 title <- "Funnel plot of estimates of effect of bicycle helmets\non head injury - three data points added"
 xlabel <- "Log odds ratio (negative = injury reduction; positive = injury increase)"
+ylabel <- "Standard error (scale reversed)"
 library(metafor)
 ```
 ```{r fig.width=8, fig.height=6, message=FALSE, results='hide'}
 headmf <- rma(yi, vi, data=head.attewell,method="FE")
 headmf.tf <- trimfill(headmf)
-funnel(headmf.tf,xlim=c(-6,6),ylim=c(2,0),steps=11,xlab=xlabel,main=title,pch=18,pch.fill=22)
+funnel(headmf.tf,xlim=c(-6,6),ylim=c(2,0),steps=11,xlab=xlabel,ylab=ylabel,main=title,pch=18,pch.fill=22)
 ```
 ```{r echo=FALSE, message=FALSE, results='hide'}
 # reload the meta package to unmask function masked by metafor

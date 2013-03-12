@@ -92,7 +92,7 @@ Unfortunately those results are different from the corresponding results given i
 headmf <- rma(yi, vi, data = head.attewell, method = "FE")
 headmf.tf <- trimfill(headmf)
 funnel(headmf.tf, xlim = c(-6, 6), ylim = c(2, 0), steps = 11, xlab = xlabel, 
-    main = title, pch = 18, pch.fill = 22)
+    ylab = ylabel, main = title, pch = 18, pch.fill = 22)
 ```
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
@@ -170,7 +170,7 @@ print(xtable(results[, c(1, 2, 3, 4, 5, 11, 8, 12)], digits = 2), type = "html",
 ```
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
-<!-- Wed Mar 13 05:39:09 2013 -->
+<!-- Wed Mar 13 05:45:42 2013 -->
 <TABLE border=1>
 <TR> <TH> Source </TH> <TH> Injury Type </TH> <TH> Studies </TH> <TH> n </TH> <TH> Fixed-effects OR </TH> <TH> (FE 95% CI) </TH> <TH> Random-effects OR </TH> <TH> (RE 95% CI) </TH>  </TR>
   <TR> <TD> Elvik </TD> <TD> head </TD> <TD> old </TD> <TD align="right">  13 </TD> <TD align="right"> 0.42 </TD> <TD> (0.37-0.47) </TD> <TD align="right"> 0.38 </TD> <TD> (0.28-0.53) </TD> </TR>
