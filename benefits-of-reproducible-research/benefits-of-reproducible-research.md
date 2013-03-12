@@ -170,7 +170,7 @@ print(xtable(results[, c(1, 2, 3, 4, 5, 11, 8, 12)], digits = 2), type = "html",
 ```
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
-<!-- Wed Mar 13 05:45:42 2013 -->
+<!-- Wed Mar 13 08:00:47 2013 -->
 <TABLE border=1>
 <TR> <TH> Source </TH> <TH> Injury Type </TH> <TH> Studies </TH> <TH> n </TH> <TH> Fixed-effects OR </TH> <TH> (FE 95% CI) </TH> <TH> Random-effects OR </TH> <TH> (RE 95% CI) </TH>  </TR>
   <TR> <TD> Elvik </TD> <TD> head </TD> <TD> old </TD> <TD align="right">  13 </TD> <TD align="right"> 0.42 </TD> <TD> (0.37-0.47) </TD> <TD align="right"> 0.38 </TD> <TD> (0.28-0.53) </TD> </TR>
@@ -244,7 +244,7 @@ summary(hfn.new.tf)
 ## - Trim-and-fill method to adjust for funnel plot asymmetry
 ```
 
-The _trimfill()_ function in _meta_ only adds one hypothetical fill study, whereas Elvik adds two, but neither of the adjusted summary ORs are anywhere near those reported by Elvik. Similarly, the "headline" result of the Elvik meta-analysis has been the publication bias-adjusted random-effects summary OR for all studies, both old and new, for head, face and neck injuries combined. In the original (and much quoted) paper, Elvik calculates this as 0.85 (95% CI 0.74 - 0.98), and in the corrigendum, as 0.82 (95% CI 0.72 - 0.93). Here is what we get:
+The _trimfill()_ function in _meta_ only adds one hypothetical fill study, whereas Elvik adds two, which is why the adjusted fixed-effects summary OR produced by R is slightly different to the Elvik result (R: 0.87, Elvik: 0.89), but the adjusted **random-effects** summary OR from R is nowhere near that reported by Elvik in the corrigendum (R: 0.88, Elvik: 1.03). Similarly, the "headline" result of the Elvik meta-analysis has been the publication bias-adjusted random-effects summary OR for all studies, both old and new, for head, face and neck injuries combined. In the original (and much quoted) paper, Elvik calculates this as 0.85 (95% CI 0.74 - 0.98), and in the corrigendum, as 0.82 (95% CI 0.72 - 0.93). Here is what we get:
 
 ```
 ## Number of studies combined: k=39 (with 6 added studies)

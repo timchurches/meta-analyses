@@ -175,7 +175,7 @@ hfn.new.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.hfn.new,
 hfn.new.tf <- trimfill(hfn.new.meta)
 summary(hfn.new.tf)
 ```
-The _trimfill()_ function in _meta_ only adds one hypothetical fill study, whereas Elvik adds two, but neither of the adjusted summary ORs are anywhere near those reported by Elvik. Similarly, the "headline" result of the Elvik meta-analysis has been the publication bias-adjusted random-effects summary OR for all studies, both old and new, for head, face and neck injuries combined. In the original (and much quoted) paper, Elvik calculates this as 0.85 (95% CI 0.74 - 0.98), and in the corrigendum, as 0.82 (95% CI 0.72 - 0.93). Here is what we get:
+The _trimfill()_ function in _meta_ only adds one hypothetical fill study, whereas Elvik adds two, which is why the adjusted fixed-effects summary OR produced by R is slightly different to the Elvik result (R: 0.87, Elvik: 0.89), but the adjusted **random-effects** summary OR from R is nowhere near that reported by Elvik in the corrigendum (R: 0.88, Elvik: 1.03). Similarly, the "headline" result of the Elvik meta-analysis has been the publication bias-adjusted random-effects summary OR for all studies, both old and new, for head, face and neck injuries combined. In the original (and much quoted) paper, Elvik calculates this as 0.85 (95% CI 0.74 - 0.98), and in the corrigendum, as 0.82 (95% CI 0.72 - 0.93). Here is what we get:
 ```{r echo=FALSE}
 studies.hfn.all <- studies[which(studies$injury.type %in% c("head","face","neck") & studies$meta.analysis %in% c("A","E")),]
 hfn.all.meta <- metagen(TE=yi,seTE=sei,studlab=study.label,data=studies.hfn.all,method.bias="rank",label.e="Injured",label.c="Not injured",sm="OR")
