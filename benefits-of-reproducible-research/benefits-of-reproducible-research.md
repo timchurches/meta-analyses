@@ -84,13 +84,20 @@ summary(head.attewell.tf)
 ## - Trim-and-fill method to adjust for funnel plot asymmetry
 ```
 
-Unfortunately those results are different from the corresponding results given in Table 1 of the Elvik paper. Finally, let's examine a funnel plot (the "filled" hypothetical studies are shown as empty circles).
+Unfortunately those results are different from the corresponding results given in Table 1 of the Elvik paper. Finally, let's examine a funnel plot (using the funnel() function from the _metafor_ package; the "filled" hypothetical studies are shown as empty squares):
+
+
 
 ```r
-funnel(head.attewell.tf, log = "x", main = "Funnel plot of estimates of effect of bicycle helmets\non head injury - three data points added")
+headmf <- rma(yi, vi, data = head.attewell, method = "FE")
+headmf.tf <- trimfill(headmf)
+funnel(headmf.tf, xlim = c(-6, 6), ylim = c(2, 0), steps = 11, xlab = xlabel, 
+    main = title, pch = 18, pch.fill = 22)
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
+
+
 
 Compare that with Figure 1 from the Elvik 2011 paper:
 
@@ -163,7 +170,7 @@ print(xtable(results[, c(1, 2, 3, 4, 5, 11, 8, 12)], digits = 2), type = "html",
 ```
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
-<!-- Tue Mar 12 13:17:39 2013 -->
+<!-- Wed Mar 13 05:39:09 2013 -->
 <TABLE border=1>
 <TR> <TH> Source </TH> <TH> Injury Type </TH> <TH> Studies </TH> <TH> n </TH> <TH> Fixed-effects OR </TH> <TH> (FE 95% CI) </TH> <TH> Random-effects OR </TH> <TH> (RE 95% CI) </TH>  </TR>
   <TR> <TD> Elvik </TD> <TD> head </TD> <TD> old </TD> <TD align="right">  13 </TD> <TD align="right"> 0.42 </TD> <TD> (0.37-0.47) </TD> <TD align="right"> 0.38 </TD> <TD> (0.28-0.53) </TD> </TR>
@@ -237,7 +244,7 @@ summary(hfn.new.tf)
 ## - Trim-and-fill method to adjust for funnel plot asymmetry
 ```
 
-The _trimfill()_ function in _meta_ only adds one hypothetical fill study, whereas Elvik adds two, but neither of the adjusted summary ORs are anywhere new those reported by Elvik. Similarly, the "headline" result of the Elvik meta-analysis has been the publication bias-adjusted random-effects summary OR for all studies, both old and new, for head, face and neck injuries combined. In the original (and much quoted) paper, Elvik calculates this as 0.85 (95% CI 0.74 - 0.98), and in the corrigendum, as 0.82 (95% CI 0.72 - 0.93). Here is what we get:
+The _trimfill()_ function in _meta_ only adds one hypothetical fill study, whereas Elvik adds two, but neither of the adjusted summary ORs are anywhere near those reported by Elvik. Similarly, the "headline" result of the Elvik meta-analysis has been the publication bias-adjusted random-effects summary OR for all studies, both old and new, for head, face and neck injuries combined. In the original (and much quoted) paper, Elvik calculates this as 0.85 (95% CI 0.74 - 0.98), and in the corrigendum, as 0.82 (95% CI 0.72 - 0.93). Here is what we get:
 
 ```
 ## Number of studies combined: k=39 (with 6 added studies)
