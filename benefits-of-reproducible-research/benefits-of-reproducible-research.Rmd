@@ -2,6 +2,7 @@ The benefits of reproducible research: a public health example
 ==============================================================
 **Tim Churches**  
 Sydney, Australia  
+tim∙churches@gmail∙com  
 9 March 2013.
 
 About this document
