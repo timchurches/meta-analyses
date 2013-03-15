@@ -171,7 +171,7 @@ print(xtable(results[, c(1, 2, 3, 4, 5, 11, 8, 12)], digits = 2), type = "html",
 ```
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
-<!-- Wed Mar 13 19:03:51 2013 -->
+<!-- Sat Mar 16 10:21:30 2013 -->
 <TABLE border=1>
 <TR> <TH> Source </TH> <TH> Injury Type </TH> <TH> Studies </TH> <TH> n </TH> <TH> Fixed-effects OR </TH> <TH> (FE 95% CI) </TH> <TH> Random-effects OR </TH> <TH> (RE 95% CI) </TH>  </TR>
   <TR> <TD> Elvik </TD> <TD> head </TD> <TD> old </TD> <TD align="right">  13 </TD> <TD align="right"> 0.42 </TD> <TD> (0.37-0.47) </TD> <TD align="right"> 0.38 </TD> <TD> (0.28-0.53) </TD> </TR>
@@ -269,7 +269,7 @@ The _trimfill()_ function in _meta_ only adds one hypothetical fill study, where
 
 Clearly, a summary odds-ratio of 0.67 is materially different to a summary odds-ratio of 0.82, or 0.85.
 
-I wrote to Professor Elvik and his co-editor Dr Karl Kim on 30th December 2012 to alert them to these apparent calculation errors in the corrigendum, once again providing data files and both R and Stata code in support of my findings. It now seems clear that both the original Elvik meta-analysis and the corrigendum ought to be retracted in their entirety, given the pervasive nature of these calculation problems. A whole-of-paper corrigendum for a whole-of-paper corrigendum is not tenable: Elvik should be required to go back to square one and re-submit a completely new paper for a completely fresh and, it is hoped, more thorough peer-review. To date, I have been notified by an Elsevier representative that the matter is under investigation. Note that there is no hint whatsoever of falsification or any deliberate wrong-doing in any of this - these are all just unfortunate mistakes, albeit ones which might have been avoided or detected earlier had things been done differently.
+I wrote to Professor Elvik and his co-editor Dr Karl Kim on 30th December 2012 to alert them to these apparent calculation errors in the corrigendum, once again providing data files and both R and Stata code in support of my findings. It now seems clear that both the original Elvik meta-analysis and the corrigendum ought to be retracted in their entirety, given the pervasive nature of these calculation problems. Publication of a whole-of-paper corrigendum for a whole-of-paper corrigendum would be untenable: Elvik should be required to go back to square one and re-submit a completely new paper for a completely fresh and, it is hoped, more thorough peer-review. To date, I have been notified by an Elsevier representative that the matter is under investigation. Note that there is no hint whatsoever of falsification or any deliberate wrong-doing in any of this - these are all just unfortunate mistakes, albeit ones which might have been avoided or detected earlier had things been done differently.
 
 Can the results in this document be used as replacements for Elvik's results?
 -----------------------------------------------------------------------------
