@@ -9,7 +9,7 @@ About this document
 -------------------
 This document contains reproductions of aspects of published research into bicycle helmets. The intent of reproducing such research is to check its accuracy and correctness, and in the cases where the research has made selective use of available data, to re-present that research using all the data available from the source(s) used at the time it was done.
 
-This document is also an example of [literate programming](http://en.wikipedia.org/wiki/Literate_programming), in which expository text is interleaved with computer program code and the output of that code. The document was created in markdown format using [RStudio](http://www.rstudio.com) and the [_knitr_](http://yihui.name/knitr/) package for the [R statistical environment](http://www.r-project.org). The source file for this document, which includes all the programme code required to create the output shown, as well as the data files read by that programme code, are all freely available on [GitHub](https://github.com/timchurches/meta-analyses/tree/master/benefits-of-reproducible-research) under the terms of the [Creative Commons Attribution-ShareAlike 3.0 Australia license](http://http://creativecommons.org/licenses/by-sa/3.0/au/). Copyright and licensing arrangement of external images and other content included in this document by hyperlink are indicated in the text adjacent to each piece of external content. 
+This document is also an example of [literate programming](http://en.wikipedia.org/wiki/Literate_programming), in which expository text is interleaved with computer program code and the output of that code. The document was created in markdown format using [RStudio](http://www.rstudio.com) and the [_knitr_](http://yihui.name/knitr/) package for the [R statistical environment](http://www.r-project.org). The source file for this document, which includes all the programme code required to create the output shown, as well as the data used by that programme code, are all freely available on [GitHub](https://github.com/timchurches/meta-analyses/blob/master/benefits-of-reproducible-research/reproducing-bicycle-helmet-research.Rmd) under the terms of the [Creative Commons Attribution-ShareAlike 3.0 Australia license](http://http://creativecommons.org/licenses/by-sa/3.0/au/). Copyright and licensing arrangement of external images and other content included in this document by hyperlink are indicated in the text adjacent to each piece of external content. 
 
 Graph from a poster presentation by Colin F. Clarke presented at the Velo-city 2007 international cycling conference
 --------------------------------------------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ finch$cyclists.unhelmeted <- with(finch, (100 - percent.helmeted) * cyclists.cou
 
 The data look like this:
 <!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
-<!-- Mon Jun 17 15:26:38 2013 -->
+<!-- Mon Jun 17 15:34:36 2013 -->
 <TABLE border=1>
 <TR> <TH> age.group </TH> <TH> year </TH> <TH> percent.helmeted </TH> <TH> cyclists.counted </TH> <TH> cyclists.helmeted </TH> <TH> cyclists.unhelmeted </TH>  </TR>
   <TR> <TD> 5-11 </TD> <TD> 1990 </TD> <TD align="right"> 65 </TD> <TD align="right"> 259 </TD> <TD align="right"> 168 </TD> <TD align="right"> 91 </TD> </TR>
@@ -78,8 +78,10 @@ ggplot(finchm, aes(x = year, y = count, fill = helmeted)) + geom_bar(stat = "ide
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
 
-### Conclusion
-The first two bars in the rightmost panel in this graph correspond to the two bars in the graph in the Clarke paper. However, the graph above shows all of the relevant, comparable data that is available in the Finch _et al_. report. It provides a much fuller picture than the selective use of data in the Clarke graph.
+### Comment
+The first two bars in the rightmost panel in the graph above correspond to the two bars in the graph in the Clarke paper. However, this graph shows all of the relevant, comparable data that is available in the Finch _et al_. report. It provides a much fuller picture than the selective use of data in the Clarke graph.
+
+---
 
 This document will be extended to incorporate more reproductions in the future.
 
