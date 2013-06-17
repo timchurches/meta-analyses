@@ -1,0 +1,67 @@
+Reproducing bicycle helmet research
+===================================
+**Tim Churches**  
+Sydney, Australia  
+tim∙churches@gmail∙com  
+16 June 2013.
+
+About this document
+-------------------
+This document contains reproductions of aspects of published research into bicycle helmets. The intent of reproducing such research is to check its accuracy and correctness, and in the cases where the research has made selective use of available data, to re-present that research using all the data available from the source(s) used at the time it was done.
+
+This document is also an example of [literate programming](http://en.wikipedia.org/wiki/Literate_programming), in which expository text is interleaved with computer program code and the output of that code. The document was created in markdown format using [RStudio](http://www.rstudio.com) and the [_knitr_](http://yihui.name/knitr/) package for the [R statistical environment](http://www.r-project.org). The source file for this document, which includes all the programme code required to create the output shown, as well as the data files read by that programme code, are all freely available on [GitHub](https://github.com/timchurches/meta-analyses/tree/master/benefits-of-reproducible-research) under the terms of the [Creative Commons Attribution-ShareAlike 3.0 Australia license](http://http://creativecommons.org/licenses/by-sa/3.0/au/). Copyright and licensing arrangement of external images and other content included in this document by hyperlink are indicated in the text adjacent to each piece of external content. 
+
+Graph from a poster presentation by Colin F. Clarke presented at the Velo-city 2007 international cycling conference
+--------------------------------------------------------------------------------------------------------------------
+The source is a poster presentation at the international [Velo-city conference held in Munich in 2007](http://www.nationaler-radverkehrsplan.de/eu-bund-laender/eu/velocity/schedule.phtml). The reference is:
+> Colin Clarke (United Kingdom) - Cyclists' Touring Club: The Case against Bicycle Helmets and Legislation (poster). Velo-city 2007 ([PDF of paper](http://www.nationaler-radverkehrsplan.de/eu-bund-laender/eu/velocity/presentations/velocity2007_pp_17c_long_public.pdf)). 
+
+The first paragraph in the section of the paper titled _Bicycle helmet legislation_ states (verbatim):
+> Australia led the way in 1990 with bicycle helmet legislation in the state of Victoria. Police enforced the law and the number of people cycling immediately dropped. A reported 36% drop in number of cyclists (Finch, Heiman, Nelger) from 3121 to 2011 was from surveys in Melbourne, where 42% wore helmets before the law. The drop of 36% (see Fig 1) represents more than half of those (58%) not wearing helmets. 
+
+The figure mentioned is this (the figure is also [available in Wikimedia Commons](http://en.wikipedia.org/wiki/File:36%25_reduction_in_cycling_Melbourne.jpg) under a Creative Common license):
+![Figure by Colin Clarke from 2007 Velo-city poster](http://upload.wikimedia.org/wikipedia/commons/thumb/3/35/36%25_reduction_in_cycling_Melbourne.jpg/800px-36%25_reduction_in_cycling_Melbourne.jpg)
+
+As noted by Clarke, the source of these data is a 1993 Monash University Accident Research Centre (MUARC) report by Finch _et al_. ([PDF of report](http://www.monash.edu.au/miri/research/reports/muarc045.pdf)). The first step is to abstract the available data from the report. The report contains data from four surveys of cyclists in Melbourne: the first at 105 sites conducted in December 1987 and January 1988, the second at a subset of 80 of the original 105 sites, in May-June 1990, and two more surveys at a subset of 64 of the 80 sites, in May-June 1991 and 1992. The report contains detailed data restricted to the common 64 sites in Melbourne for the May-June surveys in 1990, 1991 and 1992. These are the data used by Clarke (or at least the first two of these three years of comparable data) and thus are the data we will focus on here. 
+
+The mandatory helmet law came into effect in Victoria in July 1990, thus there is one pre-law and two post-law data points in this subset of the 64 observation sites common to all three years 1990 to 1992.  From Section 5.2.2 of the report (page 18), we can obtain the percentage of road cyclists observed to be wearing helmets for each of three age groups (5 to 11 year olds, 12 to 17 year olds, and those aged 18 or older, the age group of each cyclist estimated by the survey observers) in each of the three years 1990 to 1992. From figures 10 to 12 on pages 20-21 of the report we can obtain the age-group-specific total counts of cyclists (shown as "n=" in the figures). Summing the counts from figures 10 to 12 gives yearly totals which agree precisely or to within less than 0.1% of the total counts for each year given in section 5.6.4 on page 35, indicating that our data are correct and complete (presumably the small and ignorable discrepencies are due to missing age group information in a handful of observations).
+
+First, we create a data frame in R containing these data, and calculate the count of cyclists wearing and not wearing helmets in each age group in each year:
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(reshape2)
+library(xtable)
+```
+
+```{r}
+finch <- data.frame(age.group=ordered(c(rep("5-11",3),rep("12-17",3),rep("18+",3)),levels=c("5-11","12-17","18+")),
+                    year=factor(c(1990,1991,1992)),
+                    percent.helmeted=c(65,78,77,21,45,59,36,74,84),
+                    cyclists.counted=c(259,235,281,1293,670,713,1567,1106,1483))
+finch$cyclists.helmeted <- with(finch, percent.helmeted*cyclists.counted/100)
+finch$cyclists.unhelmeted <- with(finch, (100-percent.helmeted)*cyclists.counted/100)
+```
+
+The data look like this:
+```{r table, echo=FALSE, results='asis'} 
+print(xtable(finch,digits=0),type="html",include.rownames=F)
+``` 
+
+From that, we can calculate the percentage of helmeted cyclists in May-June 1990: 100*(168+272+564)/(259+1293+1567) = `r 100*(168+272+564)/(259+1293+1567)`%. This is rather different from the 42% given by Clarke as the percentage cycling with helmets pre-law in the quoted paragraph above. However, the proportion of pre-law helmeted cyclists shown in his graph is approximately 32%, so it may be just a typo in the paper.
+
+So let's reproduce the graph, but using all three years of data, and showing each age group as well as all age groups combined (note that we need to transform the dataset into a long, thin layout first using the handy `melt()` function in the `reshape2` library):
+
+```{r echo=TRUE, fig.height=8, fig.width=12}
+finchm <- melt(finch,id=c("age.group","year"),measure.vars=c("cyclists.helmeted","cyclists.unhelmeted"),variable.name="helmeted",value.name="count")
+finchm$helmeted <- ordered(finchm$helmeted,levels=c("cyclists.helmeted","cyclists.unhelmeted"), labels=c("Wearing helmet","Not wearing helmet"))
+ggplot(finchm,aes(x=year,y=count,fill=helmeted)) + geom_bar(stat="identity") + facet_grid(. ~ age.group, margins=T, labeller=label_both) + scale_fill_brewer(type="qual", name="") + labs(x="Year of survey",y="Count of cyclists observed",title="Cyclist counts and helmet wearing in Melbourne, May-June 1990 to May-June 1992\n(Mandatory helmet laws introduced July 1990.)\nSource: Finch et al. Monash University Accident Research Centre Report No. 45, 1993") + theme_bw() 
+```
+### Conclusion
+The first two bars in the rightmost panel in this graph correspond to the two bars in the graph in the Clarke paper. However, the graph above shows all of the relevant, comparable data that is available in the Finch _et al_. report. It provides a much fuller picture than the selective use of data in the Clarke graph.
+
+This document will be extended to incorporate more reproductions in the future.
+
+
+
+
