@@ -44,7 +44,7 @@ finch$cyclists.unhelmeted <- with(finch, (100 - percent.helmeted) * cyclists.cou
 
 The data look like this:
 <!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
-<!-- Mon Jun 17 15:34:36 2013 -->
+<!-- Tue Jun 18 10:00:38 2013 -->
 <TABLE border=1>
 <TR> <TH> age.group </TH> <TH> year </TH> <TH> percent.helmeted </TH> <TH> cyclists.counted </TH> <TH> cyclists.helmeted </TH> <TH> cyclists.unhelmeted </TH>  </TR>
   <TR> <TD> 5-11 </TD> <TD> 1990 </TD> <TD align="right"> 65 </TD> <TD align="right"> 259 </TD> <TD align="right"> 168 </TD> <TD align="right"> 91 </TD> </TR>
@@ -80,6 +80,17 @@ ggplot(finchm, aes(x = year, y = count, fill = helmeted)) + geom_bar(stat = "ide
 
 ### Comment
 The first two bars in the rightmost panel in the graph above correspond to the two bars in the graph in the Clarke paper. However, this graph shows all of the relevant, comparable data that is available in the Finch _et al_. report. It provides a much fuller picture than the selective use of data in the Clarke graph.
+
+### Postscript
+Colin Clarke has communicated that the 42% figure in his paper comes from another reference in the paper, even though it is not attributed to it, and is therefore not a typo. Readers can be forgiven for assuming that the figure is derived from the Finch _et al_. report, I feel. He has also communicated that he did not use the 1992 data available in the report in his graph because a bicycle rally passed through one of the observation points. Here is what Finch _et al_. had to say on this issue (p44 of their report):
+
+> Another explanation for some of the increase in bicyclist numbers in 1992 is related to the fact that there appears to have been a bicycle rally passing through one of the sites (site 80, in 1991/2, Appendix 2) on a Sunday morning. This particular site is a popular recreational area and is part of a defined bicycle track. In 1991, it was rainy during all observations of this site and very few bicyclists were observed. Although the weather was generally fine in 1990, the number of bicyclists in 1992 in this area was still more than would have been expected on the basis of pre-law levels. The chance occurrence of a large group of bicyclists passing through a particular area is one of the hazards of observational surveys such as these. From a statistical point of view, however, an occurrence such as this is a true observation, well within the bounds of “normal” behaviour for that time period, and cannot be excluded from the analysis.
+> 
+> The chance occurrence of events such as different weather conditions or large groups of bicyclists, as described above, can be a problem associated with observational surveys even though observation sessions are randomly allocated within time and space strata. Such problems can be overcome, or minimised, by conducting larger surveys. Analysis methods, however, cannot overcome such problems (eg. by focussing on “fine” sites only) because it upsets the matched 64 site comparison of 1990 versus 1991.
+> 
+> The importance of the analysis of the total numbers of bicyclists as a measure of exposure trends is that it enables an assessment of trends in adults because, unlike timed-exposure, this information was available in 1990, prior to the law. This means that to have a valid comparison of pre- and post- law levels in adults, we have no choice but to look at the number of bicyclists over time. On the other hand, comparisons of the numbers of bicyclists leads only to valid conclusions about the 64 observation sites in common to each of the MUARC surveys. Unlike the timed exposure data, these results cannot, and should not, be extrapolated to the whole of metropolitan Melbourne; they only describe the 64 sampled sites.
+
+Readers can form their own opinions about whether such second-guessing of the authors' intentions represents unjustified selectivity in the use of the available data, or not.
 
 ---
 
