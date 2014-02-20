@@ -5,6 +5,8 @@ Sydney, Australia
 tim∙churches@gmail∙com  
 9 March 2013.
 
+Updated 20 February 2014 - see Postscript.
+
 About this document
 -------------------
 This document is an example of [literate programming](http://en.wikipedia.org/wiki/Literate_programming), in which expository text is interleaved with computer program code and the output of that code. The document was created in markdown format using [RStudio](http://www.rstudio.com) and the [_knitr_](http://yihui.name/knitr/) package for the [R statistical environment](http://www.r-project.org). The source file for this document, which includes all the programme code required to create the output shown, as well as the data files read by that programme code, are all freely available on [GitHub](https://github.com/timchurches/meta-analyses/tree/master/benefits-of-reproducible-research) under the terms of the [Creative Commons Attribution-ShareAlike 3.0 Australia license](http://http://creativecommons.org/licenses/by-sa/3.0/au/), with the exception of the link to the figure from the journal _Accident Analysis and Prevention_, which is copyright Elsevier Pty Ltd. 
@@ -54,7 +56,8 @@ studies$obs.no.helmet <- studies$cases.no.helmet + studies$controls.no.helmet
 
 # Calculate ORs and variance using the escalc() function from the metafor package, and add these columns to main studies
 # table
-studies <- cbind(studies,escalc(measure='OR',ai=cases.helmet,bi=cases.no.helmet,ci=controls.helmet,di=controls.no.helmet,data=studies))
+#studies <- cbind(studies,escalc(measure='OR',ai=cases.helmet,bi=cases.no.helmet,ci=controls.helmet,di=controls.no.helmet,data=studies))
+studies <- escalc(measure='OR',ai=cases.helmet,bi=cases.no.helmet,ci=controls.helmet,di=controls.no.helmet,data=studies)
 
 # Add the rows for the Hansen and Amoros new studies to the main data table
 studies <- merge(studies,HA,all=T)
@@ -200,6 +203,13 @@ Conclusions and Recommendations
 2. There is a strong case to be made for authors routinely making their programme code (including spreadsheets) available to both peer reviewers and readers, even if the data can't be released for confidentiality or other reasons. Separating data and calculations is often more difficult with a spreadsheet, but it can be done. If data cannot be released (which is not the case for meta-analyses - it always can be made available), then dummy data can be substituted so that at least the formulas and algorithms used to conduct the research can be scrutinised. 
 
 3. It is rarely advisable to undertake complex epidemiological and statistical calculations using a spreadsheet, especially when well-tested software packages which do the same calculations are readily available. Spreadsheets are just too hard to debug and audit.
+
+Postscript
+----------
+
+After a great deal of further correspondence during the balance of 2013, mainly with the publisher, due to the requirement for Elvik, being both author and editor, to recuse himself of further involvement, Elsevier decided that even though the corrigendum was also wrong, it did not need to be retracted, and instead could simply be silently corrected online. This they did, and the version of the corrigendum which now appears online and which is in print (finally!) contains the correct results for both fixed effects amd random effects. Remarkably, the conclusions drawn by Elvik in this corrected-corrigendum have not changed at all from those in the original paper, despite the results of the meta-analysis being significantly different. There is no indication that the paper has been subject to any further peer review, otherwise surely the reviewers would have asked for the conclusions to be updated to refelected the changed numerical results. I find this remarkable, or more precisely, remarkably poor practice on the part of a major scientific publisher. The best interpretation that I can apply to these events is that Elsevier acted in this way in order to save face, given that Elvik was both the editor of the journal and the author of the erroneous paper published in it. One would hope that most papers containing such pervasive calculation errors, in which the author gets it wrong twice, once in the original paper, and then again in the corrigendum, would simply be retracted without further ado.
+
+It should also be noted that Elvik and Kim are no longer the editors of _Accident Analysis and Prevention_ - they were replaced late in 2013. It is unknown whether this change of editors was causally related in any way to the events described above -- I suspect that Elsevier would deny any link.
 
 ----
 

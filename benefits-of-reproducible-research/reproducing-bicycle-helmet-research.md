@@ -43,8 +43,8 @@ finch$cyclists.unhelmeted <- with(finch, (100 - percent.helmeted) * cyclists.cou
 
 
 The data look like this:
-<!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
-<!-- Tue Jun 18 10:00:38 2013 -->
+<!-- html table generated in R 3.0.2 by xtable 1.7-1 package -->
+<!-- Thu Feb 20 13:04:28 2014 -->
 <TABLE border=1>
 <TR> <TH> age.group </TH> <TH> year </TH> <TH> percent.helmeted </TH> <TH> cyclists.counted </TH> <TH> cyclists.helmeted </TH> <TH> cyclists.unhelmeted </TH>  </TR>
   <TR> <TD> 5-11 </TD> <TD> 1990 </TD> <TD align="right"> 65 </TD> <TD align="right"> 259 </TD> <TD align="right"> 168 </TD> <TD align="right"> 91 </TD> </TR>

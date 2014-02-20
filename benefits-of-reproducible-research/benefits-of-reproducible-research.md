@@ -5,6 +5,8 @@ Sydney, Australia
 tim∙churches@gmail∙com  
 9 March 2013.
 
+Updated 20 February 2014 - see Postscript.
+
 About this document
 -------------------
 This document is an example of [literate programming](http://en.wikipedia.org/wiki/Literate_programming), in which expository text is interleaved with computer program code and the output of that code. The document was created in markdown format using [RStudio](http://www.rstudio.com) and the [_knitr_](http://yihui.name/knitr/) package for the [R statistical environment](http://www.r-project.org). The source file for this document, which includes all the programme code required to create the output shown, as well as the data files read by that programme code, are all freely available on [GitHub](https://github.com/timchurches/meta-analyses/tree/master/benefits-of-reproducible-research) under the terms of the [Creative Commons Attribution-ShareAlike 3.0 Australia license](http://http://creativecommons.org/licenses/by-sa/3.0/au/), with the exception of the link to the figure from the journal _Accident Analysis and Prevention_, which is copyright Elsevier Pty Ltd. 
@@ -42,9 +44,9 @@ summary(head.attewell.meta)
 ```
 ## Number of studies combined: k=13
 ## 
-##                         OR          95%-CI       z  p.value
-## Fixed effect model   0.418  [0.373; 0.468] -15.109 < 0.0001
-## Random effects model 0.386  [0.281; 0.531]  -5.847 < 0.0001
+##                         OR         95%-CI       z  p.value
+## Fixed effect model   0.418 [0.373; 0.468] -15.109 < 0.0001
+## Random effects model 0.386 [0.281; 0.531]  -5.847 < 0.0001
 ## 
 ## Quantifying heterogeneity:
 ## tau^2 = 0.1915; H = 2.14 [1.64; 2.78]; I^2 = 78.1% [63%; 87.1%]
@@ -68,9 +70,8 @@ summary(head.attewell.tf)
 ```
 ## Number of studies combined: k=16 (with 3 added studies)
 ## 
-##                         OR          95%-CI       z  p.value
-## Fixed effect model   0.425  [0.379; 0.475] -14.885 < 0.0001
-## Random effects model 0.430  [0.309; 0.597]  -5.023 < 0.0001
+##                        OR         95%-CI      z  p.value
+## Random effects model 0.43 [0.309; 0.597] -5.023 < 0.0001
 ## 
 ## Quantifying heterogeneity:
 ## tau^2 = 0.2253; H = 2.1 [1.65; 2.66]; I^2 = 77.3% [63.4%; 85.9%]
@@ -170,8 +171,8 @@ print(xtable(results[, c(1, 2, 3, 4, 5, 11, 8, 12)], digits = 2), type = "html",
     include.rownames = F)
 ```
 
-<!-- html table generated in R 2.15.1 by xtable 1.7-1 package -->
-<!-- Sat Mar 16 10:21:30 2013 -->
+<!-- html table generated in R 3.0.2 by xtable 1.7-1 package -->
+<!-- Thu Feb 20 13:08:43 2014 -->
 <TABLE border=1>
 <TR> <TH> Source </TH> <TH> Injury Type </TH> <TH> Studies </TH> <TH> n </TH> <TH> Fixed-effects OR </TH> <TH> (FE 95% CI) </TH> <TH> Random-effects OR </TH> <TH> (RE 95% CI) </TH>  </TR>
   <TR> <TD> Elvik </TD> <TD> head </TD> <TD> old </TD> <TD align="right">  13 </TD> <TD align="right"> 0.42 </TD> <TD> (0.37-0.47) </TD> <TD align="right"> 0.38 </TD> <TD> (0.28-0.53) </TD> </TR>
@@ -228,9 +229,8 @@ summary(hfn.new.tf)
 ```
 ## Number of studies combined: k=10 (with 1 added studies)
 ## 
-##                         OR          95%-CI      z  p.value
-## Fixed effect model   0.872  [0.793; 0.959] -2.835   0.0046
-## Random effects model 0.880  [0.673; 1.151] -0.933   0.3508
+##                        OR         95%-CI      z  p.value
+## Random effects model 0.88 [0.673; 1.151] -0.933   0.3508
 ## 
 ## Quantifying heterogeneity:
 ## tau^2 = 0.1173; H = 2.3 [1.72; 3.07]; I^2 = 81.1% [66.2%; 89.4%]
@@ -250,9 +250,8 @@ The _trimfill()_ function in _meta_ only adds one hypothetical fill study, where
 ```
 ## Number of studies combined: k=39 (with 6 added studies)
 ## 
-##                         OR          95%-CI       z  p.value
-## Fixed effect model   0.669  [0.630; 0.711] -13.053 < 0.0001
-## Random effects model 0.673  [0.552; 0.820]  -3.929 < 0.0001
+##                         OR        95%-CI      z  p.value
+## Random effects model 0.673 [0.552; 0.82] -3.929 < 0.0001
 ## 
 ## Quantifying heterogeneity:
 ## tau^2 = 0.2448; H = 2.7 [2.37; 3.07]; I^2 = 86.2% [82.1%; 89.4%]
@@ -284,6 +283,13 @@ Conclusions and Recommendations
 2. There is a strong case to be made for authors routinely making their programme code (including spreadsheets) available to both peer reviewers and readers, even if the data can't be released for confidentiality or other reasons. Separating data and calculations is often more difficult with a spreadsheet, but it can be done. If data cannot be released (which is not the case for meta-analyses - it always can be made available), then dummy data can be substituted so that at least the formulas and algorithms used to conduct the research can be scrutinised. 
 
 3. It is rarely advisable to undertake complex epidemiological and statistical calculations using a spreadsheet, especially when well-tested software packages which do the same calculations are readily available. Spreadsheets are just too hard to debug and audit.
+
+Postscript
+----------
+
+After a great deal of further correspondence during the balance of 2013, mainly with the publisher, due to the requirement for Elvik, being both author and editor, to recuse himself of further involvement, Elsevier decided that even though the corrigendum was also wrong, it did not need to be retracted, and instead could simply be silently corrected online. This they did, and the version of the corrigendum which now appears online and which is in print (finally!) contains the correct results for both fixed effects amd random effects. Remarkably, the conclusions drawn by Elvik in this corrected-corrigendum have not changed at all from those in the original paper, despite the results of the meta-analysis being significantly different. There is no indication that the paper has been subject to any further peer review, otherwise surely the reviewers would have asked for the conclusions to be updated to refelected the changed numerical results. I find this remarkable, or more precisely, remarkably poor practice on the part of a major scientific publisher. The best interpretation that I can apply to these events is that Elsevier acted in this way in order to save face, given that Elvik was both the editor of the journal and the author of the erroneous paper published in it. One would hope that most papers containing such pervasive calculation errors, in which the author gets it wrong twice, once in the original paper, and then again in the corrigendum, would simply be retracted without further ado.
+
+It should also be noted that Elvik and Kim are no longer the editors of _Accident Analysis and Prevention_ - they were replaced late in 2013. It is unknown whether this change of editors was causally related in any way to the events described above -- I suspect that Elsevier would deny any link.
 
 ----
 
