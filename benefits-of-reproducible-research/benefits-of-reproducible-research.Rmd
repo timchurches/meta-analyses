@@ -56,7 +56,11 @@ studies$obs.no.helmet <- studies$cases.no.helmet + studies$controls.no.helmet
 
 # Calculate ORs and variance using the escalc() function from the metafor package, and add these columns to main studies
 # table
+
+# This was the original code which worked with earlier versions of the metafor package
 #studies <- cbind(studies,escalc(measure='OR',ai=cases.helmet,bi=cases.no.helmet,ci=controls.helmet,di=controls.no.helmet,data=studies))
+
+# This now works with v1.9.x of metafor.
 studies <- escalc(measure='OR',ai=cases.helmet,bi=cases.no.helmet,ci=controls.helmet,di=controls.no.helmet,data=studies)
 
 # Add the rows for the Hansen and Amoros new studies to the main data table
